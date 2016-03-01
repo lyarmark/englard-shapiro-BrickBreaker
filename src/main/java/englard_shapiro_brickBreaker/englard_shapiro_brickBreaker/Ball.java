@@ -30,9 +30,8 @@ public class Ball {
 		return diameter;
 	}
 
-	public void move(int paddleX, int paddleY) {
-		hit = hitsPaddle(paddleX, paddleY);
-		setMoveDirection();
+	public void move(int paddleX, int paddleY, Piece brick) {
+		setMoveDirection(paddleX, paddleY, brick);
 
 		if (moveLeft) {
 			xPos -= 1;
@@ -49,34 +48,102 @@ public class Ball {
 
 	}
 
-	private void setMoveDirection() {
+	private void setMoveDirection(int x, int y, Piece brick) {
 		// check if the ball should move up or down and then right or left
-		checkMoveUp();
-		checkMoveDown();
-		checkMoveRight();
-		checkMoveLeft();
+		/*
+		 * put all checking in a thread
+		 */
+		checkHitPaddle(x, y);
+		//send in list of brick and have a loop to check each brick
+		checkBrickCollision(brick);
+		checkHitWall();
 
 	}
 
-	private void checkMoveUp() {
-		// set up the hit paddle method
-		if (hit) {
-			moveUp = true;
+	private void checkHitWall() {
+		checkTopWall();
+		checkLeftWall();
+		checkRightWall();
+	}
+
+	private void checkBrickCollision(Piece brick) {
+		checkBrickRight(brick);
+		checkBrickLeft(brick);
+		checkBrickTop(brick);
+		checkBrickBottom(brick);
+		
+	}
+
+	private void checkBrickRight(Piece brick) {
+		if ((yPos == (brick.getY() + brick.getLength())
+				&& (xPos <= (brick.getX() + brick.getWidth())) && (xPos >= brick
+				.getX()))) {
+			switchRightandLeft();
 		}
 	}
 
-	private boolean hitsPaddle(int x, int y) {
+	private void checkBrickLeft(Piece brick) {
+		if ((yPos == brick.getY())
+				&& (xPos <= (brick.getX() + brick.getWidth()))
+				&& (xPos >= brick.getX())) {
+			switchRightandLeft();
+		}
+	}
+
+	private void switchRightandLeft() {
+		if (moveRight) {
+			moveRight = false;
+			moveLeft = true;
+		} else {
+			moveRight = true;
+			moveLeft = false;
+		}
+
+	}
+
+	private void checkBrickBottom(Piece brick) {
+		if ((xPos == brick.getX() + brick.getWidth())
+				&& (yPos <= brick.getY() + brick.getLength())
+				&& (yPos >= brick.getY())) {
+			switchUpandDown();
+		}
+
+	}
+
+	private void checkBrickTop(Piece brick) {
+		if ((xPos == brick.getX())
+				&& (yPos <= brick.getY() + brick.getLength())
+				&& (yPos >= brick.getY())) {
+			switchUpandDown();
+		}
+
+	}
+
+	private void switchUpandDown() {
+		if (moveUp) {
+			moveUp = false;
+			moveDown = true;
+		} else {
+			moveUp = true;
+			moveDown = false;
+		}
+
+	}
+
+	private void checkHitPaddle(int x, int y) {
 
 		if (yPos == (y - 15)) { // on the line of the paddle 15 is height of
 								// paddle
 			if (xPos <= (x + 80)) { // 80 is length of paddle
-				return true;
+				// if it hit the paddle ball move up
+				moveUp = true;
+				moveDown = false;
 			}
 		}
-		return false;
+
 	}
 
-	private void checkMoveDown() {
+	private void checkTopWall() {
 		if (yPos - 11 <= 0) {// ten in the diameter of the ball
 
 			moveDown = true;
@@ -85,14 +152,14 @@ public class Ball {
 		}
 	}
 
-	private void checkMoveRight() {
+	private void checkLeftWall() {
 		if (xPos - 11 <= 0) { // ten in the diameter of the ball
 			moveRight = true;
 			moveLeft = false;
 		}
 	}
 
-	private void checkMoveLeft() {
+	private void checkRightWall() {
 		if (xPos + 11 >= frameWidth) { // ten in the diameter of the ball
 			moveLeft = true;
 			moveRight = false;
