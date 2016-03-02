@@ -1,6 +1,8 @@
 package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
 
-public class Paddle {
+import javax.swing.JComponent;
+
+public class Paddle extends JComponent {
 
 	private int xPos;
 	private int yPos;

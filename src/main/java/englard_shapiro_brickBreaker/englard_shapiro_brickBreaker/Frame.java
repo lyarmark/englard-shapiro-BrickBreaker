@@ -48,7 +48,12 @@ public class Frame extends JFrame implements KeyListener {
 						e.printStackTrace();
 					}
 				} else {
-					board.moveBall();
+					try {
+						board.moveBall();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					board.repaint();
 				}
 			}
@@ -90,9 +95,13 @@ public class Frame extends JFrame implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int c = e.getKeyCode();
 		if (c == KeyEvent.VK_LEFT) {
-			board.movePaddleLeft();
+			if (!isPaused) {
+				board.movePaddleLeft();
+			}
 		} else if (c == KeyEvent.VK_RIGHT) {
-			board.movePaddleRight();
+			if (!isPaused) {
+				board.movePaddleRight();
+			}
 		} else if (c == KeyEvent.VK_P) {
 			isPaused = true;
 		} else if (c == KeyEvent.VK_R) {
@@ -104,7 +113,6 @@ public class Frame extends JFrame implements KeyListener {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub

@@ -1,6 +1,8 @@
 package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
 
-public class Ball {
+import javax.swing.JComponent;
+
+public class Ball extends JComponent{
 
 	private int frameWidth;
 	private int frameHeight;
@@ -13,9 +15,9 @@ public class Ball {
 	private boolean moveDown;
 	private boolean hit;
 
-	public Ball(int x, int y, int width, int height) {
-		frameWidth = width;
-		frameHeight = height;
+	public Ball(int x, int y, int frameWidth, int frameHeight) {
+		this.frameWidth = frameWidth;
+		this.frameHeight = frameHeight;
 		diameter = 10;
 		xPos = x;
 		yPos = y;
@@ -54,7 +56,7 @@ public class Ball {
 		 * put all checking in a thread
 		 */
 		checkHitPaddle(x, y);
-		//send in list of brick and have a loop to check each brick
+		// send in list of brick and have a loop to check each brick
 		checkBrickCollision(brick);
 		checkHitWall();
 
@@ -71,7 +73,7 @@ public class Ball {
 		checkBrickLeft(brick);
 		checkBrickTop(brick);
 		checkBrickBottom(brick);
-		
+
 	}
 
 	private void checkBrickRight(Piece brick) {
@@ -134,7 +136,7 @@ public class Ball {
 
 		if (yPos == (y - 15)) { // on the line of the paddle 15 is height of
 								// paddle
-			if (xPos <= (x + 80)) { // 80 is length of paddle
+			if (xPos <= (x + 80) && xPos >= x) { // 80 is length of paddle
 				// if it hit the paddle ball move up
 				moveUp = true;
 				moveDown = false;
