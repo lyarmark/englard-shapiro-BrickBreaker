@@ -2,34 +2,23 @@ package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
 
 import javax.swing.JComponent;
 
-public class Ball extends JComponent{
+public class Ball extends JComponent {
 
-	private int frameWidth;
-	private int frameHeight;
-	private int diameter;
 	private int xPos;
 	private int yPos;
 	private boolean moveLeft;
 	private boolean moveRight;
 	private boolean moveUp;
 	private boolean moveDown;
-	private boolean hit;
+	public static int BALL_DIAMETER = 10;
 
-	public Ball(int x, int y, int frameWidth, int frameHeight) {
-		this.frameWidth = frameWidth;
-		this.frameHeight = frameHeight;
-		diameter = 10;
+	public Ball(int x, int y) {
 		xPos = x;
 		yPos = y;
 		moveUp = true;
 		moveRight = true;
 		moveDown = false;
 		moveLeft = false;
-		hit = false;
-	}
-
-	public int getDiameter() {
-		return diameter;
 	}
 
 	public void move(int paddleX, int paddleY, Piece brick) {
@@ -77,17 +66,17 @@ public class Ball extends JComponent{
 	}
 
 	private void checkBrickRight(Piece brick) {
-		if ((yPos == (brick.getY() + brick.getLength())
-				&& (xPos <= (brick.getX() + brick.getWidth())) && (xPos >= brick
-				.getX()))) {
+		if ((xPos == (brick.getX()+ brick.getLength()))
+				&& (yPos <= (brick.getY() + brick.getWidth()))
+				&& (yPos >= brick.getY())) {
 			switchRightandLeft();
 		}
 	}
 
 	private void checkBrickLeft(Piece brick) {
-		if ((yPos == brick.getY())
-				&& (xPos <= (brick.getX() + brick.getWidth()))
-				&& (xPos >= brick.getX())) {
+		if ((xPos == brick.getX())
+				&& (yPos <= (brick.getY() + brick.getWidth()))
+				&& (yPos >= brick.getY())) {
 			switchRightandLeft();
 		}
 	}
@@ -104,18 +93,18 @@ public class Ball extends JComponent{
 	}
 
 	private void checkBrickBottom(Piece brick) {
-		if ((xPos == brick.getX() + brick.getWidth())
-				&& (yPos <= brick.getY() + brick.getLength())
-				&& (yPos >= brick.getY())) {
+		if ((yPos == brick.getY() + brick.getWidth())
+				&& (xPos <= brick.getX() + brick.getLength())
+				&& (xPos >= brick.getX())) {
 			switchUpandDown();
 		}
 
 	}
 
 	private void checkBrickTop(Piece brick) {
-		if ((xPos == brick.getX())
-				&& (yPos <= brick.getY() + brick.getLength())
-				&& (yPos >= brick.getY())) {
+		if ((yPos == brick.getY())
+				&& (xPos <= brick.getX() + brick.getLength())
+				&& (xPos >= brick.getX())) {
 			switchUpandDown();
 		}
 
@@ -133,16 +122,34 @@ public class Ball extends JComponent{
 	}
 
 	private void checkHitPaddle(int x, int y) {
+		checkTopPaddle(x, y);
+		checkRightSidePaddle(x, y);
+		checkLeftSidePaddle(x, y);
 
-		if (yPos == (y - 15)) { // on the line of the paddle 15 is height of
-								// paddle
-			if (xPos <= (x + 80) && xPos >= x) { // 80 is length of paddle
-				// if it hit the paddle ball move up
-				moveUp = true;
-				moveDown = false;
+	}
+
+	private void checkLeftSidePaddle(int x, int y) {
+		if (xPos == x && yPos >= y && yPos <=(y + Paddle.PADDLE_HEIGHT)) {
+			switchUpandDown();
+			switchRightandLeft();
+		}
+	}
+
+	private void checkRightSidePaddle(int x, int y) {
+		if (xPos == (x + Paddle.PADDLE_LENGTH) && yPos >= y
+				&& yPos <= (y + Paddle.PADDLE_HEIGHT)) {
+
+			switchUpandDown();
+			switchRightandLeft();
+		}
+	}
+
+	private void checkTopPaddle(int x, int y) {
+		if (yPos == (y - Paddle.PADDLE_HEIGHT)) {
+			if (xPos <= (x + Paddle.PADDLE_LENGTH) && xPos >= x) {
+				switchUpandDown();
 			}
 		}
-
 	}
 
 	private void checkTopWall() {
@@ -162,7 +169,7 @@ public class Ball extends JComponent{
 	}
 
 	private void checkRightWall() {
-		if (xPos + 11 >= frameWidth) { // ten in the diameter of the ball
+		if (xPos + 11 >= Board.BOARD_WIDTH) { // ten in the diameter of the ball
 			moveLeft = true;
 			moveRight = false;
 		}

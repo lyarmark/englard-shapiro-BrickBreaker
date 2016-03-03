@@ -40,21 +40,15 @@ public class Frame extends JFrame implements KeyListener {
 		Runnable play = new Runnable() {
 
 			public void run() {
+				try{
 				if (isPaused) {
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					Thread.sleep(100);
 				} else {
-					try {
-						board.moveBall();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					board.moveBall();
 					board.repaint();
+				}
+				}catch(InterruptedException  e){
+					System.out.println("Interrupted thread exception");
 				}
 			}
 		};

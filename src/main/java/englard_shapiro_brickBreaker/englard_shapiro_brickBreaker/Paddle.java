@@ -6,16 +6,13 @@ public class Paddle extends JComponent {
 
 	private int xPos;
 	private int yPos;
-	private int length;
-	private int height;
-	private int frameWidth;
+	public static int PADDLE_LENGTH = 80;
+	public static int PADDLE_HEIGHT = 15;
 
-	public Paddle(int width, int height) {
-		frameWidth = height;
-		length = 80;
-		this.height = 15;
-		xPos = (width - length) / 2;
-		yPos = (height - this.height) - 75;
+	public Paddle() {
+
+		xPos = (Board.BOARD_WIDTH - PADDLE_LENGTH) / 2;
+		yPos = (Board.BOARD_HEIGHT - PADDLE_HEIGHT) - 75;
 	}
 
 	public int getX() {
@@ -26,14 +23,6 @@ public class Paddle extends JComponent {
 		return yPos;
 	}
 
-	public int getLength() {
-		return length;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
 	public void moveLeft() {
 		if (xPos - 10 >= 0) {
 			xPos -= 10;
@@ -42,7 +31,7 @@ public class Paddle extends JComponent {
 
 	public void moveRight() {
 
-		if (xPos + 10 <= (frameWidth - length)) {
+		if (xPos + 10 <= (Board.BOARD_WIDTH - PADDLE_LENGTH)) {
 			xPos += 10;
 		}
 	}
