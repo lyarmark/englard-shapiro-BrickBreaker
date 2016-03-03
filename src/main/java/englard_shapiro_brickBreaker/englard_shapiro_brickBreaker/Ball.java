@@ -1,10 +1,8 @@
 package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
 
-import javax.swing.JComponent;
 
-public class Ball extends JComponent {
+public class Ball {
 
-	private Board board;
 	private int xPos;
 	private int yPos;
 	private boolean moveLeft;
@@ -14,8 +12,7 @@ public class Ball extends JComponent {
 	public static int BALL_DIAMETER = 10;
 
 
-	public Ball(Board board, int x, int y) {
-		this.board = board;
+	public Ball(int x, int y) {
 		xPos = x;
 		yPos = y;
 		moveUp = true;
@@ -44,32 +41,10 @@ public class Ball extends JComponent {
 
 	private void setMoveDirection(int x, int y, Piece brick) {
 		// check if the ball should move up or down and then right or left
-		/*
-		 * put all checking in a thread
-		 */
+		
 		checkHitWall();
-		/*int nextX = xPos, nextY = yPos;
-		if (moveLeft) {
-			nextX -= 1;
-		} else if (moveRight) {
-			nextX += 1;
-		}
-		if (moveUp) {
-			nextY -= 1;
-		} else if (moveDown) {
-			nextY += 1;
-		}
-		Component component = board.whichComponent(nextX, nextY);
-		//Component component = new Paddle(0, 0);
-		if (component instanceof Paddle) {*/
-			checkHitPaddle(x, y);
-		/*} else if (component instanceof Piece) {
-			// send in list of brick and have a loop to check each brick 
-			checkBrickCollision(brick);
-		}*/
-			checkBrickCollision(brick);
-
-
+		checkHitPaddle(x, y);
+		checkBrickCollision(brick);
 	}
 
 	private void checkHitWall() {

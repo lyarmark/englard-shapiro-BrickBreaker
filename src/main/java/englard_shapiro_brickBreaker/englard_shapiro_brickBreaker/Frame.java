@@ -39,28 +39,31 @@ public class Frame extends JFrame implements KeyListener {
 		Runnable play = new Runnable() {
 
 			public void run() {
-				try{
-				if (isPaused) {
-					Thread.sleep(100);
-				} else {
-					board.moveBall();
-					board.repaint();
-				}
-				}catch(InterruptedException  e){
-					System.out.println("Interrupted thread exception");
+				while (true) {
+					try {
+						if (isPaused) {
+							Thread.sleep(100);
+						} else {
+							board.moveBall();
+							board.repaint();
+							Thread.sleep(16);
+						}
+					} catch (InterruptedException e) {
+						System.out.println("Interrupted thread exception");
+					}
 				}
 			}
 		};
-		this.executor.scheduleWithFixedDelay(play, 0, 5, TimeUnit.MILLISECONDS);
+		new Thread(play).start();
+		
 		Runnable playSound = new Runnable() {
 
 			public void run() {
 				music = new MusicThread();
-				music.start();
+				// music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
-				TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
 	}
 
 	private void addComponents() {
@@ -116,7 +119,7 @@ public class Frame extends JFrame implements KeyListener {
 		createComponents();
 		setProperties();
 		addComponents();
-		RunGame();		
+		RunGame();
 	}
 
 }

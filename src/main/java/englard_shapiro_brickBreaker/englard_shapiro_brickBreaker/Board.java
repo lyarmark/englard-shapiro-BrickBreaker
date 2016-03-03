@@ -1,7 +1,6 @@
 package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
 
 import javax.swing.JOptionPane;
@@ -20,7 +19,7 @@ public class Board extends JPanel {
 	public Board(Frame frame) {
 		this.setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		paddle = new Paddle();
-		ball = new Ball(this, BOARD_WIDTH / 2,
+		ball = new Ball(BOARD_WIDTH / 2,
 				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
 		brick = new Piece(100, 100, Color.RED);
 		livesUsed = 0;
@@ -69,17 +68,13 @@ public class Board extends JPanel {
 			}
 
 			// send in new ball , remove this ball
-			ball = new Ball(this, paddle.getX(),
+			ball = new Ball(paddle.getX(),
 					(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
 
 			livesUsed++;
 		} else {
 			ball.move(paddle.getX(), paddle.getY(), brick);
 		}
-	}
-
-	public Component whichComponent(int nextX, int nextY) {
-		return findComponentAt(nextX, nextY);
 	}
 
 }

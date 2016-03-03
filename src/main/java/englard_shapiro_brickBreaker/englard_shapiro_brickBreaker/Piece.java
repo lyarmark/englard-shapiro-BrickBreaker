@@ -2,9 +2,7 @@ package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
 
 import java.awt.Color;
 
-import javax.swing.JComponent;
-
-public class Piece extends JComponent{
+public class Piece {
 
 	private int xPos;
 	private int yPos;
