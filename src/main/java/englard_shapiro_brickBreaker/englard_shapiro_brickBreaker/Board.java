@@ -1,8 +1,10 @@
 package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Board extends JPanel {
@@ -10,14 +12,18 @@ public class Board extends JPanel {
 	private Paddle paddle;
 	private Ball ball;
 	private Piece brick;
+	private int livesUsed;
+	private Frame frame;
 
-	public Board() {
+	public Board(Frame frame) {
 		this.setSize(600, 600);
 		paddle = new Paddle(this.getWidth(), this.getHeight());
-		ball = new Ball(this.getWidth() / 2,
+		ball = new Ball(this, this.getWidth() / 2,
 				(paddle.getY() - paddle.getHeight()), this.getWidth(),
 				this.getHeight());
 		brick = new Piece(100, 100, Color.RED);
+		livesUsed = 0;
+		this.frame = frame;
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -49,13 +55,31 @@ public class Board extends JPanel {
 
 		if (ball.getY() > (paddle.getY() + paddle.getHeight())) {
 			// the ball died
-			// decriment lives - pause time thread.sleep not working
-
+			// pause time thread.sleep not working
+			if (livesUsed == 3) {
+				int playAgain = JOptionPane.showConfirmDialog(null,
+						"Game over! Would you like to play again?", "Game Over",
+						JOptionPane.YES_NO_OPTION);
+				if (playAgain == 0) {
+					frame.restart();
+				} else {
+					frame.dispose();
+					System.exit(0);
+				}
+			}
+			
 			// send in new ball , remove this ball
-			ball = new Ball(paddle.getX(), paddle.getY(), this.getWidth(),
+			ball = new Ball(this, paddle.getX(), paddle.getY(), this.getWidth(),
 					this.getHeight());
+			livesUsed++;
 		} else {
 			ball.move(paddle.getX(), paddle.getY(), brick);
 		}
 	}
+
+	public Component whichComponent(int nextX, int nextY) {
+		return findComponentAt(nextX, nextY);
+	}
+
+	
 }

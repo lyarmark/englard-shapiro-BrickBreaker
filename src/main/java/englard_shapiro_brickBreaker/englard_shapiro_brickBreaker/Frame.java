@@ -9,7 +9,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 
 public class Frame extends JFrame implements KeyListener {
 
@@ -25,7 +24,7 @@ public class Frame extends JFrame implements KeyListener {
 
 	public Frame() {
 		setSize(600, 600);
-		setTitle("Brick Braker");
+		setTitle("Brick Breaker");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
@@ -84,7 +83,7 @@ public class Frame extends JFrame implements KeyListener {
 	}
 
 	private void createComponents() {
-		board = new Board();
+		board = new Board(this);
 		isPaused = false;
 		this.executor = Executors.newScheduledThreadPool(1);
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
@@ -117,6 +116,13 @@ public class Frame extends JFrame implements KeyListener {
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void restart() {
+		createComponents();
+		setProperties();
+		addComponents();
+		RunGame();		
 	}
 
 }

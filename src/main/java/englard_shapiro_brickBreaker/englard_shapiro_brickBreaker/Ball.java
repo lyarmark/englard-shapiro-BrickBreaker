@@ -4,6 +4,7 @@ import javax.swing.JComponent;
 
 public class Ball extends JComponent{
 
+	private Board board;
 	private int frameWidth;
 	private int frameHeight;
 	private int diameter;
@@ -15,7 +16,8 @@ public class Ball extends JComponent{
 	private boolean moveDown;
 	private boolean hit;
 
-	public Ball(int x, int y, int frameWidth, int frameHeight) {
+	public Ball(Board board, int x, int y, int frameWidth, int frameHeight) {
+		this.board = board;
 		this.frameWidth = frameWidth;
 		this.frameHeight = frameHeight;
 		diameter = 10;
@@ -55,10 +57,26 @@ public class Ball extends JComponent{
 		/*
 		 * put all checking in a thread
 		 */
-		checkHitPaddle(x, y);
-		// send in list of brick and have a loop to check each brick
-		checkBrickCollision(brick);
 		checkHitWall();
+		/*int nextX = xPos, nextY = yPos;
+		if (moveLeft) {
+			nextX -= 1;
+		} else if (moveRight) {
+			nextX += 1;
+		}
+		if (moveUp) {
+			nextY -= 1;
+		} else if (moveDown) {
+			nextY += 1;
+		}
+		Component component = board.whichComponent(nextX, nextY);
+		//Component component = new Paddle(0, 0);
+		if (component instanceof Paddle) {*/
+			checkHitPaddle(x, y);
+		/*} else if (component instanceof Piece) {
+			// send in list of brick and have a loop to check each brick 
+			checkBrickCollision(brick);
+		}*/
 
 	}
 
