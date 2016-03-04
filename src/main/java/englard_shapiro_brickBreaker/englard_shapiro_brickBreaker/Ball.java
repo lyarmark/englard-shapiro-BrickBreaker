@@ -1,6 +1,5 @@
 package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
 
-
 public class Ball {
 
 	private int xPos;
@@ -9,8 +8,7 @@ public class Ball {
 	private boolean moveRight;
 	private boolean moveUp;
 	private boolean moveDown;
-	public static int BALL_DIAMETER = 10;
-
+	public static final int BALL_DIAMETER = 10;
 
 	public Ball(int x, int y) {
 		xPos = x;
@@ -41,7 +39,7 @@ public class Ball {
 
 	private void setMoveDirection(int x, int y, Piece brick) {
 		// check if the ball should move up or down and then right or left
-		
+
 		checkHitWall();
 		checkHitPaddle(x, y);
 		checkBrickCollision(brick);
@@ -53,68 +51,22 @@ public class Ball {
 		checkRightWall();
 	}
 
-	private void checkBrickCollision(Piece brick) {
-		checkBrickRight(brick);
-		checkBrickLeft(brick);
-		checkBrickTop(brick);
-		checkBrickBottom(brick);
-
+	private void checkTopWall() {
+		if (yPos - BALL_DIAMETER <= 0) {
+			switchUpandDown();
+		}
 	}
 
-	private void checkBrickRight(Piece brick) {
-		if ((xPos == (brick.getX()+ brick.getLength()))
-				&& (yPos <= (brick.getY() + brick.getWidth()))
-				&& (yPos >= brick.getY())) {
+	private void checkLeftWall() {
+		if (xPos - BALL_DIAMETER <= 0) { 
 			switchRightandLeft();
 		}
 	}
 
-	private void checkBrickLeft(Piece brick) {
-		if ((xPos == brick.getX())
-				&& (yPos <= (brick.getY() + brick.getWidth()))
-				&& (yPos >= brick.getY())) {
+	private void checkRightWall() {
+		if (xPos + BALL_DIAMETER +6>= Board.BOARD_WIDTH) {
 			switchRightandLeft();
 		}
-	}
-
-	private void switchRightandLeft() {
-		if (moveRight) {
-			moveRight = false;
-			moveLeft = true;
-		} else {
-			moveRight = true;
-			moveLeft = false;
-		}
-
-	}
-
-	private void checkBrickBottom(Piece brick) {
-		if ((yPos == brick.getY() + brick.getWidth())
-				&& (xPos <= brick.getX() + brick.getLength())
-				&& (xPos >= brick.getX())) {
-			switchUpandDown();
-		}
-
-	}
-
-	private void checkBrickTop(Piece brick) {
-		if ((yPos == brick.getY())
-				&& (xPos <= brick.getX() + brick.getLength())
-				&& (xPos >= brick.getX())) {
-			switchUpandDown();
-		}
-
-	}
-
-	private void switchUpandDown() {
-		if (moveUp) {
-			moveUp = false;
-			moveDown = true;
-		} else {
-			moveUp = true;
-			moveDown = false;
-		}
-
 	}
 
 	private void checkHitPaddle(int x, int y) {
@@ -125,7 +77,7 @@ public class Ball {
 	}
 
 	private void checkLeftSidePaddle(int x, int y) {
-		if (xPos == x && yPos >= y && yPos <=(y + Paddle.PADDLE_HEIGHT)) {
+		if (xPos == x && yPos >= y && yPos <= (y + Paddle.PADDLE_HEIGHT)) {
 			switchUpandDown();
 			switchRightandLeft();
 		}
@@ -141,34 +93,79 @@ public class Ball {
 	}
 
 	private void checkTopPaddle(int x, int y) {
-		if (yPos == (y - Paddle.PADDLE_HEIGHT)) {
+		if (yPos == (y - BALL_DIAMETER)) {
 			if (xPos <= (x + Paddle.PADDLE_LENGTH) && xPos >= x) {
 				switchUpandDown();
 			}
 		}
 	}
 
-	private void checkTopWall() {
-		if (yPos - 11 <= 0) {// ten in the diameter of the ball
+	private void checkBrickCollision(Piece brick) {
+		checkBrickRight(brick);
+		checkBrickLeft(brick);
+		checkBrickTop(brick);
+		checkBrickBottom(brick);
 
-			moveDown = true;
-			moveUp = false;
+	}
 
+	private void checkBrickRight(Piece brick) {
+		int brickY = brick.getY();
+		if ((xPos == (brick.getX() + brick.getLength()))
+				&& (yPos <= (brickY + brick.getWidth()))
+				&& (yPos >= brickY)) {
+			switchRightandLeft();
 		}
 	}
 
-	private void checkLeftWall() {
-		if (xPos - 11 <= 0) { // ten in the diameter of the ball
+	private void checkBrickLeft(Piece brick) {
+		int brickY = brick.getY();
+		if ((xPos == brick.getX())
+				&& (yPos <= (brickY + brick.getWidth()))
+				&& (yPos >= brickY)) {
+			switchRightandLeft();
+		}
+	}
+
+	private void checkBrickBottom(Piece brick) {
+		int brickX = brick.getX();
+		if ((yPos == brick.getY() + brick.getWidth())
+				&& (xPos <= brickX + brick.getLength())
+				&& (xPos >= brickX)) {
+			switchUpandDown();
+		}
+
+	}
+
+	private void checkBrickTop(Piece brick) {
+		int brickX = brick.getX();
+		if ((yPos == brick.getY())
+				&& (xPos <= brickX + brick.getLength())
+				&& (xPos >= brickX)) {
+			switchUpandDown();
+		}
+
+	}
+
+	private void switchRightandLeft() {
+		if (moveRight) {
+			moveRight = false;
+			moveLeft = true;
+		} else {
 			moveRight = true;
 			moveLeft = false;
 		}
+
 	}
 
-	private void checkRightWall() {
-		if (xPos + 11 >= Board.BOARD_WIDTH) { // ten in the diameter of the ball
-			moveLeft = true;
-			moveRight = false;
+	private void switchUpandDown() {
+		if (moveUp) {
+			moveUp = false;
+			moveDown = true;
+		} else {
+			moveUp = true;
+			moveDown = false;
 		}
+
 	}
 
 	public int getX() {

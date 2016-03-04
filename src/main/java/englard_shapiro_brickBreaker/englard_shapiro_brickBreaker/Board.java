@@ -11,8 +11,8 @@ public class Board extends JPanel {
 	private Paddle paddle;
 	private Ball ball;
 	private Piece brick;
-	public static int BOARD_HEIGHT = 600;
-	public static int BOARD_WIDTH = 600;
+	public static final int BOARD_HEIGHT = 600;
+	public static final int BOARD_WIDTH = 600;
 	private int livesUsed;
 	private Frame frame;
 

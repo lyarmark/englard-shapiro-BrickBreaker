@@ -5,8 +5,8 @@ public class Paddle  {
 
 	private int xPos;
 	private int yPos;
-	public static int PADDLE_LENGTH = 80;
-	public static int PADDLE_HEIGHT = 15;
+	public static final int PADDLE_LENGTH = 80;
+	public static final int PADDLE_HEIGHT = 15;
 
 	public Paddle() {
 
