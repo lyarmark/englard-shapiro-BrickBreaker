@@ -64,7 +64,7 @@ public class Ball {
 	}
 
 	private void checkRightWall() {
-		if (xPos + BALL_DIAMETER +6>= Board.BOARD_WIDTH) {
+		if (xPos + BALL_DIAMETER +6 >= Board.BOARD_WIDTH) {
 			switchRightandLeft();
 		}
 	}
