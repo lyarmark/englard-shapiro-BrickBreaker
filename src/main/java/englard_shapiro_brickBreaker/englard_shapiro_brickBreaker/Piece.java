@@ -15,7 +15,7 @@ public class Piece {
 	}
 
 	/*
-	 * the x is left most spot of rectnagle
+	 * the x is left most spot of rectangle
 	 */
 	public Piece(int x, int y, Color color) {
 		xPos = x;

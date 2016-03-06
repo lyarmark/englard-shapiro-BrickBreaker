@@ -46,7 +46,7 @@ public class Frame extends JFrame implements KeyListener {
 						} else {
 							board.moveBall();
 							board.repaint();
-							Thread.sleep(25);
+							Thread.sleep(7);
 						}
 					} catch (InterruptedException e) {
 						System.out.println("Interrupted thread exception");
