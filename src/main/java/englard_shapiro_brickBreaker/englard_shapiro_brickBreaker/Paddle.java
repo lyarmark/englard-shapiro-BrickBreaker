@@ -23,15 +23,15 @@ public class Paddle  {
 	}
 
 	public void moveLeft() {
-		if (xPos - 10 >= 0) {
-			xPos -= 10;
+		if (xPos - 15 >= 0) {
+			xPos -= 15;
 		}
 	}
 
 	public void moveRight() {
 
-		if (xPos + 10 <= (Board.BOARD_WIDTH - PADDLE_LENGTH)) {
-			xPos += 10;
+		if (xPos + 15 <= (Board.BOARD_WIDTH - PADDLE_LENGTH)) {
+			xPos += 15;
 		}
 	}
 

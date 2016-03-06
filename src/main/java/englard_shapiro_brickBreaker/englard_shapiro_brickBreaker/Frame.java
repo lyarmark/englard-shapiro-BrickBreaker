@@ -60,7 +60,7 @@ public class Frame extends JFrame implements KeyListener {
 
 			public void run() {
 				music = new MusicThread();
-				// music.start();
+				music.start();
 			}
 		};
 		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
