@@ -115,15 +115,15 @@ public class Ball {
 
 	private void checkBrickRight(Piece brick) {
 		int brickY = brick.getY();
-		if ((xPos == (brick.getX() + brick.getLength()))
-				&& (yPos <= (brickY + brick.getWidth())) && (yPos >= brickY)) {
+		if ((xPos == (brick.getX() + Piece.BRICK_LENGTH))
+				&& (yPos <= (brickY + Piece.BRICK_WIDTH)) && (yPos >= brickY)) {
 			switchRightandLeft();
 		}
 	}
 
 	private void checkBrickLeft(Piece brick) {
 		int brickY = brick.getY();
-		if ((xPos == brick.getX()) && (yPos <= (brickY + brick.getWidth()))
+		if ((xPos == brick.getX()) && (yPos <= (brickY + Piece.BRICK_WIDTH))
 				&& (yPos >= brickY)) {
 			switchRightandLeft();
 		}
@@ -131,8 +131,8 @@ public class Ball {
 
 	private void checkBrickBottom(Piece brick) {
 		int brickX = brick.getX();
-		if ((yPos == brick.getY() + brick.getWidth())
-				&& (xPos <= brickX + brick.getLength()) && (xPos >= brickX)) {
+		if ((yPos == brick.getY() + Piece.BRICK_WIDTH)
+				&& (xPos <= brickX + Piece.BRICK_LENGTH) && (xPos >= brickX)) {
 			switchUpandDown();
 		}
 
@@ -140,7 +140,7 @@ public class Ball {
 
 	private void checkBrickTop(Piece brick) {
 		int brickX = brick.getX();
-		if ((yPos == brick.getY()) && (xPos <= brickX + brick.getLength())
+		if ((yPos == brick.getY()) && (xPos <= brickX + Piece.BRICK_LENGTH)
 				&& (xPos >= brickX)) {
 			switchUpandDown();
 		}

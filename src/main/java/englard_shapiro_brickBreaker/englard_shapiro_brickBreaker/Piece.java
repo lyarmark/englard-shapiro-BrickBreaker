@@ -7,8 +7,8 @@ public class Piece {
 	private int xPos;
 	private int yPos;
 	private Color color;
-	private int length;
-	private int width;
+	public static int BRICK_LENGTH = 50;
+	public static int BRICK_WIDTH = 30;
 
 	public Color getColor() {
 		return color;
@@ -21,8 +21,7 @@ public class Piece {
 		xPos = x;
 		yPos = y;
 		this.color = color;
-		length = 50;
-		width = 30;
+
 	}
 
 	public int getX() {
@@ -31,14 +30,6 @@ public class Piece {
 
 	public int getY() {
 		return yPos;
-	}
-
-	public int getLength() {
-		return length;
-	}
-
-	public int getWidth() {
-		return width;
 	}
 
 }

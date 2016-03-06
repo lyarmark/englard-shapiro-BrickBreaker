@@ -98,11 +98,11 @@ public class Board extends JPanel {
 		// create loop to set up all pieces - make 2d-array of pieces
 		for (Piece brick : bricks) {
 			g.setColor(brick.getColor());
-			g.fillRect(brick.getX(), brick.getY(), brick.getLength(),
-					brick.getWidth());
+			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
+					Piece.BRICK_WIDTH);
 			g.setColor(Color.BLACK);
-			g.drawRect(brick.getX(), brick.getY(), brick.getLength(),
-					brick.getWidth());
+			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
+					Piece.BRICK_WIDTH);
 		}
 	}
 
