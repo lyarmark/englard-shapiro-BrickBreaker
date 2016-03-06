@@ -82,7 +82,7 @@ public class Frame extends JFrame implements KeyListener {
 	private void createComponents() {
 		board = new Board(this);
 		isPaused = false;
-		this.executor = Executors.newScheduledThreadPool(1);
+		//this.executor = Executors.newScheduledThreadPool(1);
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
 
@@ -117,7 +117,7 @@ public class Frame extends JFrame implements KeyListener {
 
 	public void restart() {
 		createComponents();
-		setProperties();
+		//setProperties();
 		addComponents();
 		RunGame();
 	}

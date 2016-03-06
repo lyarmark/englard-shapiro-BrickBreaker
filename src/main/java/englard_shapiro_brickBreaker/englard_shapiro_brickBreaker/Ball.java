@@ -6,6 +6,7 @@ public class Ball {
 
 	private int xPos;
 	private int yPos;
+	private boolean brickHit;
 	private boolean moveLeft;
 	private boolean moveRight;
 	private boolean moveUp;
@@ -19,10 +20,13 @@ public class Ball {
 		moveRight = true;
 		moveDown = false;
 		moveLeft = false;
+		brickHit = false;
 	}
 
-	public void move(int paddleX, int paddleY, ArrayList<Piece> bricks) {
-		setMoveDirection(paddleX, paddleY, bricks);
+	//returns brick that was hit or null if no brick hit
+	public Piece move(int paddleX, int paddleY, ArrayList<Piece> bricks) {
+		brickHit = false;
+		Piece hitBrick = setMoveDirection(paddleX, paddleY, bricks);
 
 		if (moveLeft) {
 			xPos -= 1;
@@ -37,16 +41,23 @@ public class Ball {
 			yPos += 1;
 		}
 
+		return hitBrick;
 	}
 
-	private void setMoveDirection(int x, int y, ArrayList<Piece> bricks) {
+	//returns brick that was hit or null if no brick hit
+	private Piece setMoveDirection(int x, int y, ArrayList<Piece> bricks) {
 		// check if the ball should move up or down and then right or left
 
 		checkHitWall();
 		checkHitPaddle(x, y);
 		for (Piece brick : bricks) {
 			checkBrickCollision(brick);
+			if (brickHit) {
+				return brick;
+			}
 		}
+		//no brick hit
+		return null;
 	}
 
 	private void checkHitWall() {
@@ -118,6 +129,7 @@ public class Ball {
 		if ((xPos == (brick.getX() + Piece.BRICK_LENGTH))
 				&& (yPos <= (brickY + Piece.BRICK_WIDTH)) && (yPos >= brickY)) {
 			switchRightandLeft();
+			brickHit = true;
 		}
 	}
 
@@ -126,6 +138,7 @@ public class Ball {
 		if ((xPos == brick.getX()) && (yPos <= (brickY + Piece.BRICK_WIDTH))
 				&& (yPos >= brickY)) {
 			switchRightandLeft();
+			brickHit = true;
 		}
 	}
 
@@ -134,6 +147,7 @@ public class Ball {
 		if ((yPos == brick.getY() + Piece.BRICK_WIDTH)
 				&& (xPos <= brickX + Piece.BRICK_LENGTH) && (xPos >= brickX)) {
 			switchUpandDown();
+			brickHit = true;
 		}
 
 	}
@@ -143,6 +157,7 @@ public class Ball {
 		if ((yPos == brick.getY()) && (xPos <= brickX + Piece.BRICK_LENGTH)
 				&& (xPos >= brickX)) {
 			switchUpandDown();
+			brickHit = true;
 		}
 
 	}

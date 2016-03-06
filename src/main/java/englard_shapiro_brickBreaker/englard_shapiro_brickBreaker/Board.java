@@ -139,7 +139,10 @@ public class Board extends JPanel {
 
 			livesUsed++;
 		} else {
-			ball.move(paddle.getX(), paddle.getY(), bricks);
+			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
+			if (hitBrick != null) {
+				bricks.remove(hitBrick);
+			}
 		}
 	}
 
