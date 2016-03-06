@@ -73,7 +73,7 @@ public class Ball {
 	}
 
 	private void checkLeftWall() {
-		if (xPos - BALL_DIAMETER <= 0) {
+		if (xPos  <= 0) {
 			switchRightandLeft();
 		}
 	}
