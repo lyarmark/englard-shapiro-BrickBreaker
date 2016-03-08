@@ -143,6 +143,17 @@ public class Board extends JPanel {
 			if (hitBrick != null) {
 				bricks.remove(hitBrick);
 			}
+			if (bricks.size() == 0) {
+				int playAgain = JOptionPane.showConfirmDialog(null,
+						"You win! Would you like to play again?",
+						"Congratulations!!", JOptionPane.YES_NO_OPTION);
+				if (playAgain == 0) {
+					frame.restart();
+				} else {
+					frame.dispose();
+					System.exit(0);
+				}
+			}
 		}
 	}
 
