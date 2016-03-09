@@ -1,4 +1,4 @@
-package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
+package englard_shapiro_brickBreaker;
 
 import java.util.ArrayList;
 
@@ -86,6 +86,7 @@ public class Ball {
 	}
 
 	private void checkHitPaddle(int x, int y) {
+		System.out.println("Paddle " + x +  " " +y  +" Ball " + (xPos+BALL_DIAMETER) + " "+ yPos);
 		checkTopPaddle(x, y);
 		checkRightSidePaddle(x, y);
 		checkLeftSidePaddle(x, y);

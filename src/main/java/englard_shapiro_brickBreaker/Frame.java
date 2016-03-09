@@ -1,13 +1,15 @@
-package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
+package englard_shapiro_brickBreaker;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class Frame extends JFrame implements KeyListener {
@@ -21,6 +23,9 @@ public class Frame extends JFrame implements KeyListener {
 	private boolean isPaused;
 	private ScheduledExecutorService musicExecutor;
 	private MusicThread music;
+	//getters and setters dont work for this??
+	//protected final  Image background = new ImageIcon(getClass().getResource("/hexigonBackground.jpg")).getImage(); ;
+
 
 	public Frame() {
 		setSize(600, 600);
@@ -60,7 +65,7 @@ public class Frame extends JFrame implements KeyListener {
 
 			public void run() {
 				music = new MusicThread();
-				music.start();
+				//music.start();
 			}
 		};
 		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);

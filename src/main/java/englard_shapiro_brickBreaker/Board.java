@@ -1,9 +1,12 @@
-package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
-
+package englard_shapiro_brickBreaker;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -19,6 +22,7 @@ public class Board extends JPanel {
 
 	public Board(Frame frame) {
 		this.setSize(BOARD_WIDTH, BOARD_HEIGHT);
+		this.setBackground(Color.black);
 		paddle = new Paddle();
 		ball = new Ball(BOARD_WIDTH / 2,
 				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
@@ -89,10 +93,11 @@ public class Board extends JPanel {
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		//g.drawImage(frame.background, 0,0 , this);
 		g.setColor(Color.BLUE);
 		g.fillRect(paddle.getX(), paddle.getY(), Paddle.PADDLE_LENGTH,
 				Paddle.PADDLE_HEIGHT);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.white);
 		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER,
 				Ball.BALL_DIAMETER);
 		// create loop to set up all pieces - make 2d-array of pieces

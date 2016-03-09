@@ -1,4 +1,4 @@
-package englard_shapiro_brickBreaker.englard_shapiro_brickBreaker;
+package englard_shapiro_brickBreaker;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
