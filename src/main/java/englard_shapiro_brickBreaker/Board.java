@@ -1,4 +1,5 @@
 package englard_shapiro_brickBreaker;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -26,6 +27,7 @@ public class Board extends JPanel {
 		paddle = new Paddle();
 		ball = new Ball(BOARD_WIDTH / 2,
 				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
+		//ball = new Ball(10,10);
 		bricks = new ArrayList<Piece>();
 		bricks.add(new Piece(0, 50, Color.RED));
 		bricks.add(new Piece(50, 50, Color.RED));
@@ -93,7 +95,6 @@ public class Board extends JPanel {
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		//g.drawImage(frame.background, 0,0 , this);
 		g.setColor(Color.BLUE);
 		g.fillRect(paddle.getX(), paddle.getY(), Paddle.PADDLE_LENGTH,
 				Paddle.PADDLE_HEIGHT);
@@ -109,6 +110,7 @@ public class Board extends JPanel {
 			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
 					Piece.BRICK_WIDTH);
 		}
+
 	}
 
 	public void movePaddleLeft() {
@@ -147,6 +149,17 @@ public class Board extends JPanel {
 			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
 			if (hitBrick != null) {
 				bricks.remove(hitBrick);
+			}
+			if (bricks.size() == 0) {
+				int playAgain = JOptionPane.showConfirmDialog(null,
+						"You win! Would you like to play again?",
+						"Congratulations!!", JOptionPane.YES_NO_OPTION);
+				if (playAgain == 0) {
+					frame.restart();
+				} else {
+					frame.dispose();
+					System.exit(0);
+				}
 			}
 		}
 	}

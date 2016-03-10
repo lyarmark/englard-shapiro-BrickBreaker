@@ -23,7 +23,7 @@ public class Ball {
 		brickHit = false;
 	}
 
-	//returns brick that was hit or null if no brick hit
+	// returns brick that was hit or null if no brick hit
 	public Piece move(int paddleX, int paddleY, ArrayList<Piece> bricks) {
 		brickHit = false;
 		Piece hitBrick = setMoveDirection(paddleX, paddleY, bricks);
@@ -44,7 +44,7 @@ public class Ball {
 		return hitBrick;
 	}
 
-	//returns brick that was hit or null if no brick hit
+	// returns brick that was hit or null if no brick hit
 	private Piece setMoveDirection(int x, int y, ArrayList<Piece> bricks) {
 		// check if the ball should move up or down and then right or left
 
@@ -56,7 +56,7 @@ public class Ball {
 				return brick;
 			}
 		}
-		//no brick hit
+		// no brick hit
 		return null;
 	}
 
@@ -67,13 +67,13 @@ public class Ball {
 	}
 
 	private void checkTopWall() {
-		if (yPos - BALL_DIAMETER <= 0) {
+		if (yPos <= 0) {
 			switchUpandDown();
 		}
 	}
 
 	private void checkLeftWall() {
-		if (xPos  <= 0) {
+		if (xPos <= 0) {
 			switchRightandLeft();
 		}
 	}
@@ -86,42 +86,40 @@ public class Ball {
 	}
 
 	private void checkHitPaddle(int x, int y) {
-		System.out.println("Paddle " + x +  " " +y  +" Ball " + (xPos+BALL_DIAMETER) + " "+ yPos);
 		checkTopPaddle(x, y);
-		checkRightSidePaddle(x, y);
-		checkLeftSidePaddle(x, y);
+		checkSidePaddle(x, y);
 
-	}
-
-	private void checkLeftSidePaddle(int x, int y) {
-		if (xPos == x && yPos >= y && yPos <= (y + Paddle.PADDLE_HEIGHT)) {
-			switchUpandDown();
-			switchRightandLeft();
-		}
-	}
-
-	private void checkRightSidePaddle(int x, int y) {
-		if (xPos == (x + Paddle.PADDLE_LENGTH) && yPos >= y
-				&& yPos <= (y + Paddle.PADDLE_HEIGHT)) {
-
-			switchUpandDown();
-			switchRightandLeft();
-		}
 	}
 
 	private void checkTopPaddle(int x, int y) {
-		if (yPos == (y - BALL_DIAMETER)) {
+		if (yPos + BALL_DIAMETER == (y)) {
 			if (xPos <= (x + Paddle.PADDLE_LENGTH) && xPos >= x) {
 				switchUpandDown();
 			}
 		}
 	}
 
+	private void checkSidePaddle(int x, int y) {
+
+		if (((leftSide(x) || rightSide(x)) && yPos + BALL_DIAMETER >= y && yPos
+				+ BALL_DIAMETER <= (y + Paddle.PADDLE_HEIGHT))) {
+			switchUpandDown();
+			switchRightandLeft();
+		}
+	}
+
+	private boolean rightSide(int x) {
+		return xPos == (x + Paddle.PADDLE_LENGTH);
+	}
+
+	private boolean leftSide(int x) {
+		return (((xPos + BALL_DIAMETER) >= x) && (xPos < x));
+	}
+
 	private void checkBrickCollision(Piece brick) {
 		checkBrickRight(brick);
 		checkBrickLeft(brick);
-		checkBrickTop(brick);
-		checkBrickBottom(brick);
+		checkBrickTopBottom(brick);
 
 	}
 
@@ -136,30 +134,42 @@ public class Ball {
 
 	private void checkBrickLeft(Piece brick) {
 		int brickY = brick.getY();
-		if ((xPos == brick.getX()) && (yPos <= (brickY + Piece.BRICK_WIDTH))
-				&& (yPos >= brickY)) {
+
+		if ((xPos + BALL_DIAMETER >= brick.getX()) && xPos < brick.getX()
+				&& (yPos + BALL_DIAMETER <= (brickY + Piece.BRICK_WIDTH))
+				&& (yPos + BALL_DIAMETER >= brickY)) {
 			switchRightandLeft();
 			brickHit = true;
 		}
 	}
 
-	private void checkBrickBottom(Piece brick) {
+	private void checkBrickTopBottom(Piece brick) {
 		int brickX = brick.getX();
-		if ((yPos == brick.getY() + Piece.BRICK_WIDTH)
-				&& (xPos <= brickX + Piece.BRICK_LENGTH) && (xPos >= brickX)) {
-			switchUpandDown();
-			brickHit = true;
+		if ((brickTop(brick) || brickBottom(brick))
+				&& (xPos <= brickX + Piece.BRICK_LENGTH)) {
+			if (moveLeft) {
+				if (xPos + BALL_DIAMETER >= brickX) {
+					switchUpandDown();
+					brickHit = true;
+				}
+			} else {
+				if ((xPos >= brickX)) {
+					switchUpandDown();
+					brickHit = true;
+				}
+			}
 		}
 
 	}
 
-	private void checkBrickTop(Piece brick) {
-		int brickX = brick.getX();
-		if ((yPos == brick.getY()) && (xPos <= brickX + Piece.BRICK_LENGTH)
-				&& (xPos >= brickX)) {
-			switchUpandDown();
-			brickHit = true;
-		}
+	private boolean brickTop(Piece brick) {
+
+		return (yPos + BALL_DIAMETER > brick.getY() && yPos < brick.getY());
+	}
+
+	private boolean brickBottom(Piece brick) {
+		int bottom = brick.getY() + Piece.BRICK_WIDTH;
+		return ((yPos -BALL_DIAMETER/2) < (bottom) && yPos > bottom);
 
 	}
 

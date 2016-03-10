@@ -19,13 +19,10 @@ public class Frame extends JFrame implements KeyListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Board board;
-	private ScheduledExecutorService executor;
 	private boolean isPaused;
 	private ScheduledExecutorService musicExecutor;
 	private MusicThread music;
-	//getters and setters dont work for this??
-	//protected final  Image background = new ImageIcon(getClass().getResource("/hexigonBackground.jpg")).getImage(); ;
-
+	private Runnable play;
 
 	public Frame() {
 		setSize(600, 600);
@@ -41,7 +38,7 @@ public class Frame extends JFrame implements KeyListener {
 	}
 
 	private void RunGame() {
-		Runnable play = new Runnable() {
+		play = new Runnable() {
 
 			public void run() {
 				while (true) {
@@ -51,7 +48,7 @@ public class Frame extends JFrame implements KeyListener {
 						} else {
 							board.moveBall();
 							board.repaint();
-							Thread.sleep(7);
+							Thread.sleep(5);
 						}
 					} catch (InterruptedException e) {
 						System.out.println("Interrupted thread exception");
@@ -60,7 +57,7 @@ public class Frame extends JFrame implements KeyListener {
 			}
 		};
 		new Thread(play).start();
-		
+
 		Runnable playSound = new Runnable() {
 
 			public void run() {
@@ -68,7 +65,8 @@ public class Frame extends JFrame implements KeyListener {
 				//music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
+				TimeUnit.SECONDS);
 	}
 
 	private void addComponents() {
@@ -87,7 +85,6 @@ public class Frame extends JFrame implements KeyListener {
 	private void createComponents() {
 		board = new Board(this);
 		isPaused = false;
-		//this.executor = Executors.newScheduledThreadPool(1);
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
 
@@ -122,9 +119,8 @@ public class Frame extends JFrame implements KeyListener {
 
 	public void restart() {
 		createComponents();
-		//setProperties();
+		setProperties();
 		addComponents();
-		RunGame();
 	}
 
 }
