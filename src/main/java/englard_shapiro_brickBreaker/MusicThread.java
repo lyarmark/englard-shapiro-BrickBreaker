@@ -13,7 +13,7 @@ public class MusicThread extends Thread {
 
 	public void run() {
 
-		URL urlClick = getClass().getResource("Nine.wav");
+		URL urlClick = getClass().getResource("/Nine.wav");
 		clip = Applet.newAudioClip(urlClick);
 		clip.play();
 	}

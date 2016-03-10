@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-public class Frame extends JFrame implements KeyListener {
+public class BrickBrackerGame extends JFrame implements KeyListener {
 
 	/**
 	 * 
@@ -24,7 +24,7 @@ public class Frame extends JFrame implements KeyListener {
 	private MusicThread music;
 	private Runnable play;
 
-	public Frame() {
+	public BrickBrackerGame() {
 		setSize(600, 600);
 		setTitle("Brick Breaker");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,6 +38,15 @@ public class Frame extends JFrame implements KeyListener {
 	}
 
 	private void RunGame() {
+		Runnable playSound = new Runnable() {
+
+			public void run() {
+				music = new MusicThread();
+				//music.start();
+			}
+		};
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
+				TimeUnit.SECONDS);
 		play = new Runnable() {
 
 			public void run() {
@@ -58,15 +67,7 @@ public class Frame extends JFrame implements KeyListener {
 		};
 		new Thread(play).start();
 
-		Runnable playSound = new Runnable() {
-
-			public void run() {
-				music = new MusicThread();
-				//music.start();
-			}
-		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
-				TimeUnit.SECONDS);
+	
 	}
 
 	private void addComponents() {
