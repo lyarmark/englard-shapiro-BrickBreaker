@@ -2,14 +2,12 @@ package englard_shapiro_brickBreaker;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class BrickBrackerGame extends JFrame implements KeyListener {
@@ -23,6 +21,8 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	private ScheduledExecutorService musicExecutor;
 	private MusicThread music;
 	private Runnable play;
+	private boolean left = false;
+	private boolean right = false;
 
 	public BrickBrackerGame() {
 		setSize(600, 600);
@@ -42,11 +42,10 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 
 			public void run() {
 				music = new MusicThread();
-				//music.start();
+				// music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
-				TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
 		play = new Runnable() {
 
 			public void run() {
@@ -55,6 +54,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 						if (isPaused) {
 							Thread.sleep(100);
 						} else {
+							movePaddle();
 							board.moveBall();
 							board.repaint();
 							Thread.sleep(5);
@@ -64,10 +64,22 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 					}
 				}
 			}
+
 		};
 		new Thread(play).start();
 
-	
+	}
+
+	private void movePaddle() {
+		if (left) {
+			if (!isPaused) {
+				board.movePaddleLeft();
+			}
+		} else if (right) {
+			if (!isPaused) {
+				board.movePaddleRight();
+			}
+		}
 	}
 
 	private void addComponents() {
@@ -93,24 +105,25 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		int c = e.getKeyCode();
-		if (c == KeyEvent.VK_LEFT) {
-			if (!isPaused) {
-				board.movePaddleLeft();
-			}
-		} else if (c == KeyEvent.VK_RIGHT) {
-			if (!isPaused) {
-				board.movePaddleRight();
-			}
-		} else if (c == KeyEvent.VK_P) {
+		left = (c == KeyEvent.VK_LEFT);
+		right = (c == KeyEvent.VK_RIGHT);
+
+		if (c == KeyEvent.VK_P) {
 			isPaused = true;
 		} else if (c == KeyEvent.VK_R) {
 			isPaused = false;
 		}
+
 	}
 
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
+	public void keyReleased(KeyEvent e) {
+		int c = e.getKeyCode();
+		if (left && (c == KeyEvent.VK_LEFT)) {
+			left = false;
+		}
+		if (right && (c == KeyEvent.VK_RIGHT)) {
+			right = false;
+		}
 	}
 
 	public void keyTyped(KeyEvent arg0) {

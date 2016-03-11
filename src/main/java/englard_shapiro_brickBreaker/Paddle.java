@@ -1,8 +1,8 @@
 package englard_shapiro_brickBreaker;
 
+public class Paddle {
 
-public class Paddle  {
-
+	private static final int MOVE_AMOUNT = 1;
 	private int xPos;
 	private int yPos;
 	public static final int PADDLE_LENGTH = 80;
@@ -23,15 +23,15 @@ public class Paddle  {
 	}
 
 	public void moveLeft() {
-		if (xPos - 15 >= 0) {
-			xPos -= 15;
+		if (xPos - MOVE_AMOUNT >= 0) {
+			xPos -= MOVE_AMOUNT;
 		}
 	}
 
 	public void moveRight() {
 
-		if (xPos + 15 <= (Board.BOARD_WIDTH - PADDLE_LENGTH)) {
-			xPos += 15;
+		if (xPos + MOVE_AMOUNT <= (Board.BOARD_WIDTH - PADDLE_LENGTH)) {
+			xPos += MOVE_AMOUNT;
 		}
 	}
 
