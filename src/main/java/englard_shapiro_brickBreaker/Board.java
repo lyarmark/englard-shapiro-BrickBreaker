@@ -2,12 +2,8 @@ package englard_shapiro_brickBreaker;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -18,8 +14,9 @@ public class Board extends JPanel {
 	private ArrayList<Piece> bricks;
 	public static final int BOARD_HEIGHT = 600;
 	public static final int BOARD_WIDTH = 600;
-	private int livesUsed;
+	private int livesLeft;
 	private BrickBrackerGame frame;
+	private int score;
 
 	public Board(BrickBrackerGame frame) {
 		this.setSize(BOARD_WIDTH, BOARD_HEIGHT);
@@ -27,7 +24,7 @@ public class Board extends JPanel {
 		paddle = new Paddle();
 		ball = new Ball(BOARD_WIDTH / 2,
 				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
-		//ball = new Ball(10,10);
+		// ball = new Ball(10,10);
 		bricks = new ArrayList<Piece>();
 		bricks.add(new Piece(0, 50, Color.RED));
 		bricks.add(new Piece(50, 50, Color.RED));
@@ -89,7 +86,8 @@ public class Board extends JPanel {
 		bricks.add(new Piece(450, 170, Color.BLUE));
 		bricks.add(new Piece(500, 170, Color.BLUE));
 		bricks.add(new Piece(550, 170, Color.BLUE));
-		livesUsed = 0;
+		livesLeft = 3;
+		score = 0;
 		this.frame = frame;
 	}
 
@@ -101,7 +99,7 @@ public class Board extends JPanel {
 		g.setColor(Color.white);
 		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER,
 				Ball.BALL_DIAMETER);
-		// create loop to set up all pieces - make 2d-array of pieces
+		// create loop to set up all pieces - make array of pieces
 		for (Piece brick : bricks) {
 			g.setColor(brick.getColor());
 			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
@@ -128,7 +126,7 @@ public class Board extends JPanel {
 		if (ball.getY() > BOARD_HEIGHT) {
 			// the ball died
 			// pause time thread.sleep not working
-			if (livesUsed == 3) {
+			if (livesLeft == 0) {
 				int playAgain = JOptionPane.showConfirmDialog(null,
 						"Game over! Would you like to play again?",
 						"Game Over", JOptionPane.YES_NO_OPTION);
@@ -144,24 +142,31 @@ public class Board extends JPanel {
 			ball = new Ball(paddle.getX(),
 					(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
 
-			livesUsed++;
+			livesLeft--;
 		} else {
 			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
 			if (hitBrick != null) {
 				bricks.remove(hitBrick);
 			}
-			if (bricks.size() == 0) {
-				int playAgain = JOptionPane.showConfirmDialog(null,
-						"You win! Would you like to play again?",
-						"Congratulations!!", JOptionPane.YES_NO_OPTION);
-				if (playAgain == 0) {
-					frame.restart();
-				} else {
-					frame.dispose();
-					System.exit(0);
-				}
+		}
+	}
+
+	public void checkWinner() {
+		if (bricks.size() == 0) {
+			int playAgain = JOptionPane.showConfirmDialog(null,
+					"You win! Would you like to play again?",
+					"Congratulations!!", JOptionPane.YES_NO_OPTION);
+			if (playAgain == 0) {
+				frame.restart();
+			} else {
+				frame.dispose();
+				System.exit(0);
 			}
 		}
+	}
+	
+	public int getScore() {
+		return score;
 	}
 
 }

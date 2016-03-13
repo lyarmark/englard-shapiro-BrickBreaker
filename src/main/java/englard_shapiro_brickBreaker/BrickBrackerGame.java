@@ -9,6 +9,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class BrickBrackerGame extends JFrame implements KeyListener {
 
@@ -16,6 +18,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JPanel scorePanel;
 	private Board board;
 	private boolean isPaused;
 	private ScheduledExecutorService musicExecutor;
@@ -57,6 +60,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 							movePaddle();
 							board.moveBall();
 							board.repaint();
+							board.checkWinner();
 							Thread.sleep(5);
 						}
 					} catch (InterruptedException e) {
@@ -83,6 +87,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	}
 
 	private void addComponents() {
+		add(scorePanel, BorderLayout.NORTH);
 		add(board, BorderLayout.CENTER);
 
 	}
@@ -97,6 +102,11 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 
 	private void createComponents() {
 		board = new Board(this);
+		scorePanel = new JPanel();
+		JLabel lives = new JLabel("Lives: ");
+		lives.setText("Lives: OOO");
+		scorePanel.add(lives);
+		JLabel score = new JLabel("    Score: 0");
 		isPaused = false;
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
