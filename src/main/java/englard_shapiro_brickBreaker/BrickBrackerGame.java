@@ -3,6 +3,7 @@ package englard_shapiro_brickBreaker;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.Executors;
@@ -20,6 +21,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel scorePanel;
+	private JLabel lives, score;
 	private Board board;
 	private boolean isPaused;
 	private ScheduledExecutorService musicExecutor;
@@ -51,6 +53,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		};
 		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
 				TimeUnit.SECONDS);
+
 		play = new Runnable() {
 
 			public void run() {
@@ -91,7 +94,6 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	private void addComponents() {
 		add(scorePanel, BorderLayout.NORTH);
 		add(board, BorderLayout.CENTER);
-
 	}
 
 	private void setProperties() {
@@ -99,26 +101,26 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		container.setLayout(new BorderLayout());
 		container.setFocusable(true);
 		container.addKeyListener(this);
-
 	}
 
 	private void createComponents() {
 		board = new Board(this);
-		scorePanel = new JPanel();
+		scorePanel = new JPanel(new BorderLayout());
 		scorePanel.setBackground(Color.BLACK);
-		JLabel lives = new JLabel("Lives: ");
+		lives = new JLabel();
 		lives.setBackground(Color.BLACK);
 		lives.setForeground(Color.WHITE);
-		lives.setText("Lives: \u25CF \u25CF \u25CF");
-		scorePanel.add(lives);
-		JLabel score = new JLabel("    Score: 0");
+		lives.setFont(new Font(lives.getFont().getName(), Font.PLAIN, 24));
+		setLivesText(3);
+		scorePanel.add(lives, BorderLayout.WEST);
+		score = new JLabel("Score: 0 ");
 		score.setBackground(Color.BLACK);
 		score.setForeground(Color.WHITE);
-		scorePanel.add(score);
+		score.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
+		scorePanel.add(score, BorderLayout.EAST);
 		isPaused = false;
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
-
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -131,7 +133,6 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		} else if (c == KeyEvent.VK_R) {
 			isPaused = false;
 		}
-
 	}
 
 	public void keyReleased(KeyEvent e) {
@@ -146,13 +147,27 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void restart() {
-		createComponents();
-		setProperties();
-		addComponents();
+		board = new Board(this);
+		add(board, BorderLayout.CENTER);
+		setLivesText(3);
+		setScoreText();
+	}
+
+	public void setLivesText(int numLives) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Lives: ");
+		builder.append(numLives + " ");
+		for (int i = 1; i <= numLives; i++) {
+			builder.append("\u25CF ");
+		}
+		lives.setText(builder.toString());
+	}
+
+	public void setScoreText() {
+		score.setText("Score: " + board.getScore() + " ");
 	}
 
 }

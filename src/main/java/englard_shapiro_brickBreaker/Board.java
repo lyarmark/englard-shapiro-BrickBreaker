@@ -24,7 +24,6 @@ public class Board extends JPanel {
 		paddle = new Paddle();
 		ball = new Ball(BOARD_WIDTH / 2,
 				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
-		// ball = new Ball(10,10);
 		bricks = new ArrayList<Piece>();
 		bricks.add(new Piece(0, 50, Color.RED));
 		bricks.add(new Piece(50, 50, Color.RED));
@@ -100,7 +99,8 @@ public class Board extends JPanel {
 		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER,
 				Ball.BALL_DIAMETER);
 		// create loop to set up all pieces - make array of pieces
-		for (Piece brick : bricks) {
+		for (int i = 0; i < bricks.size(); i++) {
+			Piece brick = bricks.get(i);
 			g.setColor(brick.getColor());
 			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
 					Piece.BRICK_WIDTH);
@@ -136,16 +136,29 @@ public class Board extends JPanel {
 					frame.dispose();
 					System.exit(0);
 				}
+			} else {
+				// send in new ball , remove this ball
+				livesLeft--;
+				frame.setLivesText(livesLeft);
+				ball = new Ball(paddle.getX(),
+						(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
 			}
-
-			// send in new ball , remove this ball
-			ball = new Ball(paddle.getX(),
-					(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
-
-			livesLeft--;
 		} else {
 			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
 			if (hitBrick != null) {
+				Color brickColor = hitBrick.getColor();
+				if (brickColor == Color.BLUE) {
+					score += 100;
+				} else if (brickColor == Color.GREEN) {
+					score += 200;
+				} else if (brickColor == Color.YELLOW) {
+					score += 300;
+				} else if (brickColor == Color.ORANGE) {
+					score += 400;
+				} else {
+					score += 500;
+				}
+				frame.setScoreText();
 				bricks.remove(hitBrick);
 			}
 		}
