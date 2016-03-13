@@ -164,7 +164,7 @@ public class Board extends JPanel {
 			}
 		}
 	}
-	
+
 	public int getScore() {
 		return score;
 	}

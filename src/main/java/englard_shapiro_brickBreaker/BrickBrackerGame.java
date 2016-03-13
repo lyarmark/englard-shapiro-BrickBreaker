@@ -1,6 +1,7 @@
 package englard_shapiro_brickBreaker;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -48,7 +49,8 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 				// music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
+				TimeUnit.SECONDS);
 		play = new Runnable() {
 
 			public void run() {
@@ -103,10 +105,16 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	private void createComponents() {
 		board = new Board(this);
 		scorePanel = new JPanel();
+		scorePanel.setBackground(Color.BLACK);
 		JLabel lives = new JLabel("Lives: ");
-		lives.setText("Lives: OOO");
+		lives.setBackground(Color.BLACK);
+		lives.setForeground(Color.WHITE);
+		lives.setText("Lives: \u25CF \u25CF \u25CF");
 		scorePanel.add(lives);
 		JLabel score = new JLabel("    Score: 0");
+		score.setBackground(Color.BLACK);
+		score.setForeground(Color.WHITE);
+		scorePanel.add(score);
 		isPaused = false;
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
