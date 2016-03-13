@@ -2,7 +2,7 @@ package englard_shapiro_brickBreaker;
 
 public class Paddle {
 
-	private static final int MOVE_AMOUNT = 1;
+	private static final int MOVE_AMOUNT = 2;
 	private int xPos;
 	private int yPos;
 	public static final int PADDLE_LENGTH = 80;
