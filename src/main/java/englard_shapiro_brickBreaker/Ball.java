@@ -93,24 +93,17 @@ public class Ball {
 
 	private void checkTopPaddle(int x, int y) {
 		if (yPos + BALL_DIAMETER == (y)) {
-			/*if (xPos + BALL_DIAMETER == (x + Paddle.PADDLE_LENGTH)) {
-				System.out.println("right corner");
-				if (moveLeft) {
-					switchUpandDown();
-					switchRightandLeft();
-				} else {
-					switchUpandDown();
-				}
-
-			} else if (xPos + BALL_DIAMETER == x) {
-				System.out.println("left corner");
-				if (moveRight) {
-					switchUpandDown();
-					switchRightandLeft();
-				} else {
-					switchUpandDown();
-				}
-			} else*/ if (xPos < (x + Paddle.PADDLE_LENGTH) && xPos > x) {
+			/*
+			 * if (xPos + BALL_DIAMETER == (x + Paddle.PADDLE_LENGTH)) {
+			 * System.out.println("right corner"); if (moveLeft) {
+			 * switchUpandDown(); switchRightandLeft(); } else {
+			 * switchUpandDown(); }
+			 * 
+			 * } else if (xPos + BALL_DIAMETER == x) {
+			 * System.out.println("left corner"); if (moveRight) {
+			 * switchUpandDown(); switchRightandLeft(); } else {
+			 * switchUpandDown(); } } else
+			 */if (xPos < (x + Paddle.PADDLE_LENGTH) && xPos > x) {
 				switchUpandDown();
 			}
 		}

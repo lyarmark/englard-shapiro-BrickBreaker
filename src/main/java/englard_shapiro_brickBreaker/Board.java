@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -129,7 +130,8 @@ public class Board extends JPanel {
 			if (livesLeft == 0) {
 				int playAgain = JOptionPane.showConfirmDialog(null,
 						"Game over! Would you like to play again?",
-						"Game Over", JOptionPane.YES_NO_OPTION);
+						"Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+								getClass().getResource("/gameOver.jpg")));
 				if (playAgain == 0) {
 					frame.restart();
 				} else {
@@ -168,7 +170,8 @@ public class Board extends JPanel {
 		if (bricks.size() == 0) {
 			int playAgain = JOptionPane.showConfirmDialog(null,
 					"You win! Would you like to play again?",
-					"Congratulations!!", JOptionPane.YES_NO_OPTION);
+					"Congratulations!!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+							getClass().getResource("/winner.jpg")));
 			if (playAgain == 0) {
 				frame.restart();
 			} else {

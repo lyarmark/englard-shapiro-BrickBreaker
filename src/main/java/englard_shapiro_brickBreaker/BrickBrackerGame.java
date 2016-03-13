@@ -101,11 +101,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		container.setLayout(new BorderLayout());
 		container.setFocusable(true);
 		container.addKeyListener(this);
-	}
 
-	private void createComponents() {
-		board = new Board(this);
-		scorePanel = new JPanel(new BorderLayout());
 		scorePanel.setBackground(Color.BLACK);
 		lives = new JLabel();
 		lives.setBackground(Color.BLACK);
@@ -118,6 +114,11 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		score.setForeground(Color.WHITE);
 		score.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
 		scorePanel.add(score, BorderLayout.EAST);
+	}
+
+	private void createComponents() {
+		board = new Board(this);
+		scorePanel = new JPanel(new BorderLayout());
 		isPaused = false;
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
