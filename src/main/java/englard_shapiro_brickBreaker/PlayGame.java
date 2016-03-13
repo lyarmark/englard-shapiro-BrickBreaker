@@ -3,8 +3,7 @@ package englard_shapiro_brickBreaker;
 public class PlayGame {
 
 	public static void main(String[] args) {
-		BrickBrackerGame f = new BrickBrackerGame();
-
+		BrickBrackerGame game = new BrickBrackerGame();
 	}
 
 }
