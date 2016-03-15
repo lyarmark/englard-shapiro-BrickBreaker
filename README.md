@@ -15,6 +15,6 @@ How to play:
 HAVE FUN!!
 
 <p align="center">
-  <img src="C:\Users\Naami\Pictures\brickGame" width="350"/>
+  <img src="https://cloud.githubusercontent.com/assets/14226329/13764060/e5168cb6-ea21-11e5-9ee5-1446c9a560ab.png" width="350"/>
   
 </p>
