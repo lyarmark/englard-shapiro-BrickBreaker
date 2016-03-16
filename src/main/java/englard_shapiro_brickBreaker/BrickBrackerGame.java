@@ -34,6 +34,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		setSize(600, 600);
 		setTitle("Brick Breaker");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null); // center the frame on computer screen
 		setVisible(true);
 		setResizable(false);
 		createComponents();
@@ -48,7 +49,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 
 			public void run() {
 				music = new MusicThread();
-				// music.start();
+				music.start();
 			}
 		};
 		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
