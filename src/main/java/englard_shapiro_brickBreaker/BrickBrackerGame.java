@@ -36,13 +36,11 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		setTitle("Brick Breaker");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null); // center the frame on computer screen
-		setVisible(true);
 		setResizable(false);
 		createComponents();
 		setProperties();
 		addComponents();
 		RunGame();
-
 	}
 
 	private void RunGame() {
@@ -53,8 +51,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 				music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
-				TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
 
 		play = new Runnable() {
 
@@ -172,12 +169,12 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	public void setScoreText() {
 		score.setText("Score: " + board.getScore() + " ");
 	}
-	
-	public void setSpeed(int speed){
+
+	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	
-	public int getSpeed(){
+
+	public int getSpeed() {
 		return speed;
 	}
 
