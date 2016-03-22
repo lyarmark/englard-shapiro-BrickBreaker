@@ -29,6 +29,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	private Runnable play;
 	private boolean left = false;
 	private boolean right = false;
+	private int speed = 5;
 
 	public BrickBrackerGame() {
 		setSize(600, 600);
@@ -67,7 +68,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 							board.moveBall();
 							board.repaint();
 							board.checkWinner();
-							Thread.sleep(5);
+							Thread.sleep(speed);
 						}
 					} catch (InterruptedException e) {
 						System.out.println("Interrupted thread exception");
@@ -170,6 +171,14 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 
 	public void setScoreText() {
 		score.setText("Score: " + board.getScore() + " ");
+	}
+	
+	public void setSpeed(int speed){
+		this.speed = speed;
+	}
+	
+	public int getSpeed(){
+		return speed;
 	}
 
 }

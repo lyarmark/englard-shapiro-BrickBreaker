@@ -12,8 +12,10 @@ public class Ball {
 	private boolean moveUp;
 	private boolean moveDown;
 	public static final int BALL_DIAMETER = 10;
+	private Paddle paddle;
 
-	public Ball(int x, int y) {
+	public Ball(int x, int y, Paddle paddle) {
+		this.paddle = paddle;
 		xPos = x;
 		yPos = y;
 		moveUp = true;
@@ -103,7 +105,7 @@ public class Ball {
 			 * System.out.println("left corner"); if (moveRight) {
 			 * switchUpandDown(); switchRightandLeft(); } else {
 			 * switchUpandDown(); } } else
-			 */if (xPos < (x + Paddle.PADDLE_LENGTH) && xPos > x) {
+			 */if (xPos < (x + paddle.getPaddleLength()) && xPos > x) {
 				switchUpandDown();
 			}
 		}
@@ -119,7 +121,7 @@ public class Ball {
 	}
 
 	private boolean rightSide(int x) {
-		return xPos == (x + Paddle.PADDLE_LENGTH);
+		return xPos == (x + paddle.getPaddleLength());
 	}
 
 	private boolean leftSide(int x) {

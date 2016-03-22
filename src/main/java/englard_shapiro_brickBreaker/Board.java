@@ -28,7 +28,7 @@ public class Board extends JPanel {
 		this.setBackground(Color.black);
 		paddle = new Paddle();
 		ball = new Ball(BOARD_WIDTH / 2,
-				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
+				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 		bricks = new ArrayList<Piece>();
 		bricks.add(new Piece(0, 50, Color.RED));
 		bricks.add(new Piece(50, 50, Color.RED));
@@ -98,7 +98,7 @@ public class Board extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.BLUE);
-		g.fillRect(paddle.getX(), paddle.getY(), Paddle.PADDLE_LENGTH,
+		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(),
 				Paddle.PADDLE_HEIGHT);
 		g.setColor(Color.white);
 		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER,
@@ -148,7 +148,7 @@ public class Board extends JPanel {
 				livesLeft--;
 				frame.setLivesText(livesLeft);
 				ball = new Ball(paddle.getX(),
-						(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10);
+						(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 			}
 		} else {
 			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
@@ -191,4 +191,11 @@ public class Board extends JPanel {
 		return score;
 	}
 
+	public void addLivesLeft(){
+		livesLeft++;
+	}
+	
+	public void addScore(int score){
+		this.score += score;
+	}
 }
