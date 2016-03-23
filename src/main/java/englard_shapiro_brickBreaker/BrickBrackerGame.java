@@ -127,7 +127,6 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		int c = e.getKeyCode();
 		left = (c == KeyEvent.VK_LEFT);
 		right = (c == KeyEvent.VK_RIGHT);
-
 		if (c == KeyEvent.VK_P) {
 			isPaused = true;
 		} else if (c == KeyEvent.VK_R) {
