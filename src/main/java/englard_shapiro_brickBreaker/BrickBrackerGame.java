@@ -4,12 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,6 +33,9 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	private boolean left = false;
 	private boolean right = false;
 	private int speed = 5;
+	private JLabel pauseLabel;
+	private JButton help;
+	private HelpDialog helpDialog;
 
 	public BrickBrackerGame() {
 		setSize(600, 600);
@@ -41,7 +47,8 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		setProperties();
 		addComponents();
 		RunGame();
-	}
+		isPaused = false;
+		}
 
 	private void RunGame() {
 		Runnable playSound = new Runnable() {
@@ -51,7 +58,8 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 				music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
+				TimeUnit.SECONDS);
 
 		play = new Runnable() {
 
@@ -112,13 +120,32 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		score.setBackground(Color.BLACK);
 		score.setForeground(Color.WHITE);
 		score.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
-		scorePanel.add(score, BorderLayout.EAST);
+		help = new JButton("HELP");
+		help.setBackground(Color.BLACK);
+		help.setForeground(Color.WHITE);
+		help.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
+		scorePanel.add(score, BorderLayout.CENTER);
+		scorePanel.add(help, BorderLayout.EAST);
+		pauseLabel.setForeground(Color.WHITE);
+		pauseLabel.setFont(new Font("Arial", Font.BOLD, 60));
+		container.add(pauseLabel).setBounds(215, 230, 300, 100);
+		pauseLabel.setVisible(false);
+		helpDialog = new HelpDialog();
+		helpDialog.setLocationRelativeTo(this);
+		isPaused = true;
+		
+		help.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayHelp();
+			}
+		});
 	}
 
 	private void createComponents() {
 		board = new Board(this);
 		scorePanel = new JPanel(new BorderLayout());
 		isPaused = false;
+		pauseLabel = new JLabel("PAUSE");
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
 	}
@@ -130,8 +157,10 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 
 		if (c == KeyEvent.VK_P) {
 			isPaused = true;
+			pauseLabel.setVisible(true);
 		} else if (c == KeyEvent.VK_R) {
 			isPaused = false;
+			pauseLabel.setVisible(false);
 		}
 	}
 
@@ -178,4 +207,20 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		return speed;
 	}
 
+	public void displayHelp() {
+		 try {
+		//HelpDialog helpDialog = new HelpDialog();
+		//helpDialog.setLocationRelativeTo(this);
+		helpDialog.setVisible(true);
+		helpDialog.requestFocus();
+		isPaused = true;
+		Thread.sleep(5000);
+		helpDialog.setVisible(false);
+		//set focus for paddle
+		board.requestFocus();
+		isPaused = false;
+		 } catch (InterruptedException e) {
+	 e.printStackTrace();
+		}
+	}
 }

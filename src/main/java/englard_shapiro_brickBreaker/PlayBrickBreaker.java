@@ -6,5 +6,4 @@ public class PlayBrickBreaker {
 		BrickBrackerGame game = new BrickBrackerGame();
 		game.setVisible(true);
 	}
-
 }
