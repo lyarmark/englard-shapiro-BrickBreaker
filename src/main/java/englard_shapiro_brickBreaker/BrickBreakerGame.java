@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,11 +19,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class BrickBrackerGame extends JFrame implements KeyListener {
+public class BrickBreakerGame extends JFrame implements KeyListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel scorePanel;
 	private JLabel lives, score;
@@ -37,7 +36,10 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	private JButton help;
 	private HelpDialog helpDialog;
 
-	public BrickBrackerGame() {
+	private PowerUp power;
+	private PowerUp[] powers;
+
+	public BrickBreakerGame() {
 		setSize(600, 600);
 		setTitle("Brick Breaker");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -46,9 +48,10 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		createComponents();
 		setProperties();
 		addComponents();
+		setVisible(true);
 		RunGame();
 		isPaused = false;
-		}
+	}
 
 	private void RunGame() {
 		Runnable playSound = new Runnable() {
@@ -58,8 +61,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 				music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
-				TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
 
 		play = new Runnable() {
 
@@ -73,6 +75,14 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 							board.moveBall();
 							board.repaint();
 							board.checkWinner();
+							// send a power down every X points
+							if ((board.getScore() % 30) == 0) {
+								addPowerUps();
+								setPower();
+								for (int i = 10; i < getHeight(); i += 10) {
+									power.floatPowerDownScreen(getGraphics(), 300, i);
+								}
+							}
 							Thread.sleep(speed);
 						}
 					} catch (InterruptedException e) {
@@ -133,7 +143,7 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 		helpDialog = new HelpDialog();
 		helpDialog.setLocationRelativeTo(this);
 		isPaused = true;
-		
+
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				displayHelp();
@@ -207,19 +217,32 @@ public class BrickBrackerGame extends JFrame implements KeyListener {
 	}
 
 	public void displayHelp() {
-		 try {
-		//HelpDialog helpDialog = new HelpDialog();
-		//helpDialog.setLocationRelativeTo(this);
-		helpDialog.setVisible(true);
-		helpDialog.requestFocus();
-		isPaused = true;
-		Thread.sleep(5000);
-		helpDialog.setVisible(false);
-		//set focus for paddle
-		board.requestFocus();
-		isPaused = false;
-		 } catch (InterruptedException e) {
-	 e.printStackTrace();
+		try {
+			// HelpDialog helpDialog = new HelpDialog();
+			// helpDialog.setLocationRelativeTo(this);
+			helpDialog.setVisible(true);
+			helpDialog.requestFocus();
+			isPaused = true;
+			Thread.sleep(5000);
+			helpDialog.setVisible(false);
+			// set focus for paddle
+			board.requestFocus();
+			isPaused = false;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+	}
+
+	public void addPowerUps() {
+		powers = new PowerUp[1];
+		powers[0] = new PowerUpSpeed();
+	}
+
+	public void setPower() {
+		Random random = new Random();
+		// from 0-param, including 0, excluding param
+		int powerIndex = random.nextInt(1);
+		this.power = powers[powerIndex];
+		power.powerUp();
 	}
 }

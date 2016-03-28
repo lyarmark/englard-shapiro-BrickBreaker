@@ -20,10 +20,10 @@ public class Board extends JPanel {
 	public static final int BOARD_HEIGHT = 600;
 	public static final int BOARD_WIDTH = 600;
 	private int livesLeft;
-	private BrickBrackerGame frame;
+	private BrickBreakerGame frame;
 	private int score;
 
-	public Board(BrickBrackerGame frame) {
+	public Board(BrickBreakerGame frame) {
 		this.setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		this.setBackground(Color.black);
 		paddle = new Paddle();
@@ -62,67 +62,7 @@ public class Board extends JPanel {
 			x += 50;
 		}*/
 		
-		/*bricks.add(new Piece(0, 50, Color.RED));
-		bricks.add(new Piece(50, 50, Color.RED));
-		bricks.add(new Piece(100, 50, Color.RED));
-		bricks.add(new Piece(150, 50, Color.RED));
-		bricks.add(new Piece(200, 50, Color.RED));
-		bricks.add(new Piece(250, 50, Color.RED));
-		bricks.add(new Piece(300, 50, Color.RED));
-		bricks.add(new Piece(350, 50, Color.RED));
-		bricks.add(new Piece(400, 50, Color.RED));
-		bricks.add(new Piece(450, 50, Color.RED));
-		bricks.add(new Piece(500, 50, Color.RED));
-		bricks.add(new Piece(550, 50, Color.RED));
-		bricks.add(new Piece(0, 80, Color.ORANGE));
-		bricks.add(new Piece(50, 80, Color.ORANGE));
-		bricks.add(new Piece(100, 80, Color.ORANGE));
-		bricks.add(new Piece(150, 80, Color.ORANGE));
-		bricks.add(new Piece(200, 80, Color.ORANGE));
-		bricks.add(new Piece(250, 80, Color.ORANGE));
-		bricks.add(new Piece(300, 80, Color.ORANGE));
-		bricks.add(new Piece(350, 80, Color.ORANGE));
-		bricks.add(new Piece(400, 80, Color.ORANGE));
-		bricks.add(new Piece(450, 80, Color.ORANGE));
-		bricks.add(new Piece(500, 80, Color.ORANGE));
-		bricks.add(new Piece(550, 80, Color.ORANGE));
-		bricks.add(new Piece(0, 110, Color.YELLOW));
-		bricks.add(new Piece(50, 110, Color.YELLOW));
-		bricks.add(new Piece(100, 110, Color.YELLOW));
-		bricks.add(new Piece(150, 110, Color.YELLOW));
-		bricks.add(new Piece(200, 110, Color.YELLOW));
-		bricks.add(new Piece(250, 110, Color.YELLOW));
-		bricks.add(new Piece(300, 110, Color.YELLOW));
-		bricks.add(new Piece(350, 110, Color.YELLOW));
-		bricks.add(new Piece(400, 110, Color.YELLOW));
-		bricks.add(new Piece(450, 110, Color.YELLOW));
-		bricks.add(new Piece(500, 110, Color.YELLOW));
-		bricks.add(new Piece(550, 110, Color.YELLOW));
-		bricks.add(new Piece(0, 140, Color.GREEN));
-		bricks.add(new Piece(50, 140, Color.GREEN));
-		bricks.add(new Piece(100, 140, Color.GREEN));
-		bricks.add(new Piece(150, 140, Color.GREEN));
-		bricks.add(new Piece(200, 140, Color.GREEN));
-		bricks.add(new Piece(250, 140, Color.GREEN));
-		bricks.add(new Piece(300, 140, Color.GREEN));
-		bricks.add(new Piece(350, 140, Color.GREEN));
-		bricks.add(new Piece(400, 140, Color.GREEN));
-		bricks.add(new Piece(450, 140, Color.GREEN));
-		bricks.add(new Piece(500, 140, Color.GREEN));
-		bricks.add(new Piece(550, 140, Color.GREEN));
-		bricks.add(new Piece(0, 170, Color.BLUE));
-		bricks.add(new Piece(50, 170, Color.BLUE));
-		bricks.add(new Piece(100, 170, Color.BLUE));
-		bricks.add(new Piece(150, 170, Color.BLUE));
-		bricks.add(new Piece(200, 170, Color.BLUE));
-		bricks.add(new Piece(250, 170, Color.BLUE));
-		bricks.add(new Piece(300, 170, Color.BLUE));
-		bricks.add(new Piece(350, 170, Color.BLUE));
-		bricks.add(new Piece(400, 170, Color.BLUE));
-		bricks.add(new Piece(450, 170, Color.BLUE));
-		bricks.add(new Piece(500, 170, Color.BLUE));
-		bricks.add(new Piece(550, 170, Color.BLUE));*/
-		
+	
 		int x = 0;
 		int y = 0;
 		for(int i = 0; i <= 12; i++){
@@ -204,31 +144,6 @@ public class Board extends JPanel {
 		bricks.add(new Piece(500, 0, Color.RED));
 		bricks.add(new Piece(550, 30, Color.RED));
 		bricks.add(new Piece(550, 0, Color.ORANGE));
-		/*bricks.add(new Piece(0, 0, Color.RED));
-		bricks.add(new Piece(50, 30, Color.RED));
-		bricks.add(new Piece(100, 60, Color.RED));
-		bricks.add(new Piece(150, 90, Color.RED));
-		bricks.add(new Piece(200, 120, Color.RED));
-		bricks.add(new Piece(250, 150, Color.RED));
-		bricks.add(new Piece(300, 180, Color.RED));
-		bricks.add(new Piece(350, 210, Color.RED));
-		bricks.add(new Piece(400, 240, Color.RED));
-		bricks.add(new Piece(450, 270, Color.RED));
-		bricks.add(new Piece(500, 300, Color.RED));
-		bricks.add(new Piece(550, 330, Color.RED));
-		
-		bricks.add(new Piece(50, 0, Color.ORANGE));
-		bricks.add(new Piece(100, 30, Color.ORANGE));
-		bricks.add(new Piece(150, 60, Color.ORANGE));
-		bricks.add(new Piece(200, 90, Color.ORANGE));
-		bricks.add(new Piece(250, 120, Color.ORANGE));
-		bricks.add(new Piece(300, 150, Color.ORANGE));
-		bricks.add(new Piece(350, 180, Color.ORANGE));
-		bricks.add(new Piece(400, 210, Color.ORANGE));
-		bricks.add(new Piece(450, 240, Color.ORANGE));
-		bricks.add(new Piece(500, 270, Color.ORANGE));
-		bricks.add(new Piece(550, 300, Color.ORANGE));
-		bricks.add(new Piece(600, 330, Color.ORANGE));*/
 		
 		livesLeft = 3;
 		score = 0;
