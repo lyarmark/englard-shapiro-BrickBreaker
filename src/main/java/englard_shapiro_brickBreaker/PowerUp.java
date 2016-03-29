@@ -1,17 +1,24 @@
 package englard_shapiro_brickBreaker;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import javax.swing.JComponent;
 
-public abstract class PowerUp {
+public abstract class PowerUp extends JComponent {
+
+	private int x;
+	private int y;
+
+	public PowerUp(int x) {
+		this.x = 300;
+		this.y = 30;
+	}
 
 	public void powerUp() {
 	}
 
-	public void floatPowerDownScreen(Graphics g, int x, int y) {
+	public void floatPowerDownScreen(int x, int y) {
 		// where ever this is called will loop, and send diff x/ values to
 		// 'animate'
-		g.setColor(Color.pink);
-		g.fillOval(x, y, 20, 20);
+		this.x = x;
+		this.y = y;
 	}
 }

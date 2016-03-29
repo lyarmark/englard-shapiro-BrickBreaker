@@ -38,6 +38,10 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 
 	private PowerUp power;
 	private PowerUp[] powers;
+	private boolean startPower;
+	private Thread powerThread;
+	private int x;
+	private int y;
 
 	public BrickBreakerGame() {
 		setSize(600, 600);
@@ -48,6 +52,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		createComponents();
 		setProperties();
 		addComponents();
+		addPowerUps();
 		setVisible(true);
 		RunGame();
 		isPaused = false;
@@ -75,14 +80,21 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 							board.moveBall();
 							board.repaint();
 							board.checkWinner();
-							// send a power down every X points
-							if ((board.getScore() % 30) == 0) {
-								addPowerUps();
-								setPower();
-								for (int i = 10; i < getHeight(); i += 10) {
-									power.floatPowerDownScreen(getGraphics(), 300, i);
-								}
+
+							if (startPower) {
+								board.setPowerX(x);
+								board.setPowerY(y++);
 							}
+							
+							// send a power down every X points
+							if ((board.getScore() % 30) == 0 && startPower == false) {
+								startPower = true;
+								x = 300;
+								y = 20;
+								board.setPowerX(y);
+								board.setPowerY(x);
+							}
+
 							Thread.sleep(speed);
 						}
 					} catch (InterruptedException e) {
@@ -160,6 +172,21 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		music = new MusicThread();
 	}
 
+	private void startPowerThread() {
+		powerThread = new Thread() {
+			public void run() {
+				startPower = true;
+
+				setPower();
+				for (int i = 30; i < 600; i++) {
+					power.floatPowerDownScreen(300, i);
+				}
+				startPower = false;
+			}
+		};
+		powerThread.start();
+	}
+
 	public void keyPressed(KeyEvent e) {
 		int c = e.getKeyCode();
 		left = (c == KeyEvent.VK_LEFT);
@@ -235,7 +262,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 
 	public void addPowerUps() {
 		powers = new PowerUp[1];
-		powers[0] = new PowerUpSpeed();
+		powers[0] = new PowerUpSpeed(50);
 	}
 
 	public void setPower() {
@@ -244,5 +271,9 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		int powerIndex = random.nextInt(1);
 		this.power = powers[powerIndex];
 		power.powerUp();
+	}
+
+	public PowerUp getPower() {
+		return power;
 	}
 }
