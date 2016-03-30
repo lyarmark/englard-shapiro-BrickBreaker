@@ -81,17 +81,19 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 							board.checkWinner();
 
 							if (startPower) {
-								board.setPowerX(x);
+								if (y >= board.BOARD_HEIGHT) {
+									startPower = false;
+								}
 								board.setPowerY(y++);
 							}
-							
+
 							// send a power down every X points
 							if ((board.getScore() % 30) == 0 && startPower == false) {
 								startPower = true;
 								x = 300;
 								y = 20;
-								board.setPowerX(y);
-								board.setPowerY(x);
+								board.setPowerX(x);
+								board.setPowerY(y);
 							}
 
 							Thread.sleep(speed);
@@ -170,7 +172,6 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
 	}
-
 
 	public void keyPressed(KeyEvent e) {
 		int c = e.getKeyCode();
