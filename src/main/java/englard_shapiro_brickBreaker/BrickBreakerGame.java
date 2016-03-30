@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -31,7 +32,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	private Runnable play;
 	private boolean left = false;
 	private boolean right = false;
-	private int speed = 5;
+	private int speed = 3;
 	private JLabel pauseLabel;
 	private JButton help;
 	private HelpDialog helpDialog;
@@ -117,13 +118,14 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		container.addKeyListener(this);
 
 		scorePanel.setBackground(Color.BLACK);
+		scorePanel.setLayout(new GridLayout(0, 3));
 		lives = new JLabel();
 		lives.setBackground(Color.BLACK);
 		lives.setForeground(Color.WHITE);
 		lives.setFont(new Font(lives.getFont().getName(), Font.PLAIN, 24));
 		setLivesText(3);
 		scorePanel.add(lives, BorderLayout.WEST);
-		score = new JLabel("Score: 0 ");
+		score = new JLabel("   Score: 0 ");
 		score.setBackground(Color.BLACK);
 		score.setForeground(Color.WHITE);
 		score.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
@@ -134,6 +136,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		scorePanel.add(score, BorderLayout.CENTER);
 		scorePanel.add(help, BorderLayout.EAST);
 		pauseLabel.setForeground(Color.WHITE);
+		pauseLabel.setOpaque(false);
 		pauseLabel.setFont(new Font("Arial", Font.BOLD, 60));
 		container.add(pauseLabel).setBounds(215, 230, 300, 100);
 		pauseLabel.setVisible(false);
@@ -202,7 +205,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	}
 
 	public void setScoreText() {
-		score.setText("Score: " + board.getScore() + " ");
+		score.setText("   Score: " + board.getScore() + " ");
 	}
 
 	public void setSpeed(int speed) {
