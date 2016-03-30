@@ -2,11 +2,12 @@ package englard_shapiro_brickBreaker;
 
 public class PowerUpSpeed extends PowerUp {
 
+	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void powerUp() {
-		super.powerUp();
-
+	public void powerUp(BrickBreakerGame game) {
+		super.powerUp(game);
+		game.setSpeed(7);
 	}
 
 }

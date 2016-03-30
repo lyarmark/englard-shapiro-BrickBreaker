@@ -144,7 +144,7 @@ public class Board extends JPanel {
 			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
 		}
 		g.setColor(Color.pink);
-		g.fillOval(powerX, powerY, 20, 20);
+		g.fillOval(powerX, powerY, 10, 10);
 	}
 
 	public void movePaddleLeft() {

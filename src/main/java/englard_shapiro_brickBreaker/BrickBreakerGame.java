@@ -79,23 +79,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 							board.moveBall();
 							board.repaint();
 							board.checkWinner();
-
-							if (startPower) {
-								if (y >= board.BOARD_HEIGHT) {
-									startPower = false;
-								}
-								board.setPowerY(y++);
-							}
-
-							// send a power down every X points
-							if ((board.getScore() % 30) == 0 && startPower == false) {
-								startPower = true;
-								x = 300;
-								y = 20;
-								board.setPowerX(x);
-								board.setPowerY(y);
-							}
-
+							checkPower();
 							Thread.sleep(speed);
 						}
 					} catch (InterruptedException e) {
@@ -256,10 +240,34 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		// from 0-param, including 0, excluding param
 		int powerIndex = random.nextInt(1);
 		this.power = powers[powerIndex];
-		power.powerUp();
+		power.powerUp(this);
 	}
 
 	public PowerUp getPower() {
 		return power;
+	}
+
+	private void checkPower() {
+		if (startPower) {
+			if (power.checkHitPaddle(x, y, 600)) {
+				power.powerUp(this);
+				startPower = false;
+			}
+			if (y >= board.BOARD_HEIGHT) {
+				startPower = false;
+			}
+			board.setPowerY(y++);
+		}
+
+		// send a power down every X points
+		if ((board.getScore() % 30) == 0 && startPower == false) {
+			startPower = true;
+			setPower();
+			x = 300;
+			y = 20;
+			board.setPowerX(x);
+			board.setPowerY(y);
+		}
+
 	}
 }
