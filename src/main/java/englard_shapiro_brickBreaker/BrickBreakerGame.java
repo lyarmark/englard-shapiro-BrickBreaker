@@ -39,7 +39,6 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	private PowerUp power;
 	private PowerUp[] powers;
 	private boolean startPower;
-	private Thread powerThread;
 	private int x;
 	private int y;
 
@@ -172,20 +171,6 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		music = new MusicThread();
 	}
 
-	private void startPowerThread() {
-		powerThread = new Thread() {
-			public void run() {
-				startPower = true;
-
-				setPower();
-				for (int i = 30; i < 600; i++) {
-					power.floatPowerDownScreen(300, i);
-				}
-				startPower = false;
-			}
-		};
-		powerThread.start();
-	}
 
 	public void keyPressed(KeyEvent e) {
 		int c = e.getKeyCode();
@@ -262,7 +247,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 
 	public void addPowerUps() {
 		powers = new PowerUp[1];
-		powers[0] = new PowerUpSpeed(50);
+		powers[0] = new PowerUpSpeed();
 	}
 
 	public void setPower() {

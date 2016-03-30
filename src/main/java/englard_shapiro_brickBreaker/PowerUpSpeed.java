@@ -2,9 +2,6 @@ package englard_shapiro_brickBreaker;
 
 public class PowerUpSpeed extends PowerUp {
 
-	public PowerUpSpeed(int x) {
-		super(x);
-	}
 
 	@Override
 	public void powerUp() {

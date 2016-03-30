@@ -20,16 +20,9 @@ public class Board extends JPanel {
 	private int livesLeft;
 	private BrickBreakerGame frame;
 	private int score;
+
 	private int powerX;
 	private int powerY;
-
-	public void setPowerX(int powerX) {
-		this.powerX = powerX;
-	}
-
-	public void setPowerY(int powerY) {
-		this.powerY = powerY;
-	}
 
 	public Board(BrickBreakerGame frame) {
 		this.setSize(BOARD_WIDTH, BOARD_HEIGHT);
@@ -230,5 +223,13 @@ public class Board extends JPanel {
 
 	public void addScore(int score) {
 		this.score += score;
+	}
+
+	public void setPowerX(int powerX) {
+		this.powerX = powerX;
+	}
+
+	public void setPowerY(int powerY) {
+		this.powerY = powerY;
 	}
 }
