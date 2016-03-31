@@ -31,12 +31,11 @@ public class Board extends JPanel {
 	public Board(Paddle paddle, UpperPanel panel) {
 		this.setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		this.setBackground(Color.black);
-		//paddle = new Paddle();
+		// paddle = new Paddle();
 		setLayout(new BorderLayout());
 		this.panel = panel;
 		this.paddle = paddle;
-		ball = new Ball(BOARD_WIDTH / 2,
-				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
+		ball = new Ball(BOARD_WIDTH / 2, (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 		bricks = new ArrayList<Piece>();
 		setLevelOne();
 		livesLeft = 3;
@@ -46,29 +45,25 @@ public class Board extends JPanel {
 	}
 
 	public Board() {
-		//UH OH!!
+		// UH OH!!
 		// TODO Auto-generated constructor stub
 	}
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.BLUE);
-		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(),
-				Paddle.PADDLE_HEIGHT);
+		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(), Paddle.PADDLE_HEIGHT);
 		g.setColor(Color.white);
-		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER,
-				Ball.BALL_DIAMETER);
+		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER, Ball.BALL_DIAMETER);
 		// create loop to set up all pieces - make array of pieces
 		for (int i = 0; i < bricks.size(); i++) {
 			Piece brick = bricks.get(i);
 			g.setColor(brick.getColor());
-			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
-					Piece.BRICK_WIDTH);
+			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
 			g.setColor(Color.BLACK);
-			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
-					Piece.BRICK_WIDTH);
+			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
 		}
-		g.setColor(Color.pink);
+		g.setColor(Color.MAGENTA);
 		g.fillOval(powerX, powerY, 10, 10);
 	}
 
@@ -88,10 +83,8 @@ public class Board extends JPanel {
 			// the ball died
 			// pause time thread.sleep not working
 			if (livesLeft == 0) {
-				int playAgain = JOptionPane.showConfirmDialog(null,
-						"Game over! Would you like to play again?",
-						"Game Over", JOptionPane.YES_NO_OPTION,
-						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+				int playAgain = JOptionPane.showConfirmDialog(null, "Game over! Would you like to play again?",
+						"Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/gameOver.jpg")));
 				if (playAgain == 0) {
 					frame.restart();
@@ -103,8 +96,7 @@ public class Board extends JPanel {
 				// send in new ball , remove this ball
 				livesLeft--;
 				panel.setLivesText(livesLeft);
-				ball = new Ball(paddle.getX(),
-						(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
+				ball = new Ball(paddle.getX(), (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 			}
 		} else {
 			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
@@ -133,10 +125,8 @@ public class Board extends JPanel {
 				nextLevel();
 				panel.setLevelText(level);
 			} else {
-				int playAgain = JOptionPane.showConfirmDialog(null,
-						"You win! Would you like to play again?",
-						"Congratulations!!", JOptionPane.YES_NO_OPTION,
-						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+				int playAgain = JOptionPane.showConfirmDialog(null, "You win! Would you like to play again?",
+						"Congratulations!!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/winner.jpg")));
 				if (playAgain == 0) {
 					frame.restart();
@@ -232,7 +222,7 @@ public class Board extends JPanel {
 			x += 50;
 			y += 30;
 		}
-			repaint();
+		repaint();
 	}
 
 	private void setLevelThree() {
@@ -288,7 +278,7 @@ public class Board extends JPanel {
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public void addLivesLeft() {
 		livesLeft++;
 	}
@@ -303,6 +293,10 @@ public class Board extends JPanel {
 
 	public void setPowerY(int powerY) {
 		this.powerY = powerY;
+	}
+
+	public Paddle getPaddle() {
+		return paddle;
 	}
 
 }
