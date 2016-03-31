@@ -32,7 +32,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	private Runnable play;
 	private boolean left = false;
 	private boolean right = false;
-	private int speed = 3;
+	private int speed = 2;
 	private JLabel pauseLabel;
 	private JButton help;
 	private HelpDialog helpDialog;

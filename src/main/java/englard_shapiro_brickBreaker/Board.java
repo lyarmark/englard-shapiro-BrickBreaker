@@ -31,7 +31,8 @@ public class Board extends JPanel {
 		ball = new Ball(BOARD_WIDTH / 2,
 				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 		bricks = new ArrayList<Piece>();
-		setLevelOne();
+		setLevelTwo();
+		livesLeft = 3;
 		score = 0;
 		this.frame = frame;
 	}
@@ -114,9 +115,13 @@ public class Board extends JPanel {
 	}
 
 	public void checkWinner() {
+		System.out.println(bricks.size());
 		if (bricks.size() == 0) {
-			nextLevel();
-			if (level == 3) {
+			System.out.println("NO MORE BRICKS");
+			if (level < 3) {
+				System.out.println("CALL NEXT LEVEL");
+				nextLevel();
+			} else {
 				int playAgain = JOptionPane.showConfirmDialog(null,
 						"You win! Would you like to play again?",
 						"Congratulations!!", JOptionPane.YES_NO_OPTION,
@@ -144,31 +149,31 @@ public class Board extends JPanel {
 		level = 1;
 		int x = 0;
 		int y = 50;
-		for (int i = 0; i <= 12; i++) {
+		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.RED));
 			x += 50;
 		}
 		x = 0;
 		y += 30;
-		for (int i = 0; i <= 12; i++) {
+		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.ORANGE));
 			x += 50;
 		}
 		x = 0;
 		y += 30;
-		for (int i = 0; i <= 12; i++) {
+		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.YELLOW));
 			x += 50;
 		}
 		x = 0;
 		y += 30;
-		for (int i = 0; i <= 12; i++) {
+		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.GREEN));
 			x += 50;
 		}
 		x = 0;
 		y += 30;
-		for (int i = 0; i <= 12; i++) {
+		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.BLUE));
 			x += 50;
 		}
@@ -180,7 +185,7 @@ public class Board extends JPanel {
 		level = 2;
 		int x = 0;
 		int y = 0;
-		for (int i = 0; i <= 12; i++) {
+		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.RED));
 			x += 50;
 			y += 30;
@@ -188,7 +193,7 @@ public class Board extends JPanel {
 
 		x = 50;
 		y = 0;
-		for (int i = 0; i <= 11; i++) {
+		for (int i = 0; i < 11; i++) {
 			bricks.add(new Piece(x, y, Color.ORANGE));
 			x += 50;
 			y += 30;
@@ -196,7 +201,7 @@ public class Board extends JPanel {
 
 		x = 100;
 		y = 0;
-		for (int i = 0; i <= 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			bricks.add(new Piece(x, y, Color.YELLOW));
 			x += 50;
 			y += 30;
@@ -204,7 +209,7 @@ public class Board extends JPanel {
 
 		x = 150;
 		y = 0;
-		for (int i = 0; i <= 9; i++) {
+		for (int i = 0; i < 9; i++) {
 			bricks.add(new Piece(x, y, Color.GREEN));
 			x += 50;
 			y += 30;
@@ -212,54 +217,12 @@ public class Board extends JPanel {
 
 		x = 200;
 		y = 0;
-		for (int i = 0; i <= 8; i++) {
+		for (int i = 0; i < 8; i++) {
 			bricks.add(new Piece(x, y, Color.BLUE));
 			x += 50;
 			y += 30;
 		}
-
-		x = 250;
-		y = 0;
-		for (int i = 0; i <= 7; i++) {
-			bricks.add(new Piece(x, y, Color.RED));
-			x += 50;
-			y += 30;
-		}
-
-		x = 300;
-		y = 0;
-		for (int i = 0; i <= 6; i++) {
-			bricks.add(new Piece(x, y, Color.ORANGE));
-			x += 50;
-			y += 30;
-		}
-
-		x = 350;
-		y = 0;
-		for (int i = 0; i <= 5; i++) {
-			bricks.add(new Piece(x, y, Color.YELLOW));
-			x += 50;
-			y += 30;
-		}
-
-		x = 400;
-		y = 0;
-		for (int i = 0; i <= 4; i++) {
-			bricks.add(new Piece(x, y, Color.GREEN));
-			x += 50;
-			y += 30;
-		}
-		x = 450;
-		y = 0;
-		for (int i = 0; i <= 3; i++) {
-			bricks.add(new Piece(x, y, Color.BLUE));
-			x += 50;
-			y += 30;
-		}
-		bricks.add(new Piece(500, 0, Color.RED));
-		bricks.add(new Piece(550, 30, Color.RED));
-		bricks.add(new Piece(550, 0, Color.ORANGE));
-		repaint();
+			repaint();
 	}
 
 	private void setLevelThree() {
