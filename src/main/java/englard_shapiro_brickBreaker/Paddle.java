@@ -1,5 +1,8 @@
 package englard_shapiro_brickBreaker;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class Paddle {
 
 	private static final int MOVE_AMOUNT = 2;
@@ -12,7 +15,7 @@ public class Paddle {
 	public Paddle() {
 		paddleLength = 80;
 		xPos = (Board.BOARD_WIDTH - paddleLength) / 2;
-		yPos = (Board.BOARD_HEIGHT - PADDLE_HEIGHT) - 75;
+		yPos = (Board.BOARD_HEIGHT - PADDLE_HEIGHT) - 50;
 	}
 
 	public int getX() {

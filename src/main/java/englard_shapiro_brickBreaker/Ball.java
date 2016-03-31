@@ -2,6 +2,8 @@ package englard_shapiro_brickBreaker;
 
 import java.util.ArrayList;
 
+import com.google.inject.Inject;
+
 public class Ball {
 
 	private int xPos;
@@ -14,6 +16,18 @@ public class Ball {
 	public static final int BALL_DIAMETER = 10;
 	private Paddle paddle;
 
+	@Inject
+	public Ball(Paddle paddle) {
+		this.paddle = paddle;
+		xPos = Board.BOARD_WIDTH / 2;
+		yPos = (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10;
+		moveUp = true;
+		moveRight = true;
+		moveDown = false;
+		moveLeft = false;
+		brickHit = false;
+	}
+	
 	public Ball(int x, int y, Paddle paddle) {
 		this.paddle = paddle;
 		xPos = x;

@@ -1,5 +1,6 @@
 package englard_shapiro_brickBreaker;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -7,6 +8,8 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.google.inject.Inject;
 
 public class Board extends JPanel {
 
@@ -20,21 +23,31 @@ public class Board extends JPanel {
 	private BrickBreakerGame frame;
 	private int score;
 	private int level;
-
+	private UpperPanel panel;
 	private int powerX;
 	private int powerY;
 
-	public Board(BrickBreakerGame frame) {
+	@Inject
+	public Board(Paddle paddle, UpperPanel panel) {
 		this.setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		this.setBackground(Color.black);
-		paddle = new Paddle();
+		//paddle = new Paddle();
+		setLayout(new BorderLayout());
+		this.panel = panel;
+		this.paddle = paddle;
 		ball = new Ball(BOARD_WIDTH / 2,
 				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 		bricks = new ArrayList<Piece>();
 		setLevelOne();
 		livesLeft = 3;
 		score = 0;
-		this.frame = frame;
+		add(panel, BorderLayout.NORTH);
+		setVisible(true);
+	}
+
+	public Board() {
+		//UH OH!!
+		// TODO Auto-generated constructor stub
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -89,7 +102,7 @@ public class Board extends JPanel {
 			} else {
 				// send in new ball , remove this ball
 				livesLeft--;
-				frame.setLivesText(livesLeft);
+				panel.setLivesText(livesLeft);
 				ball = new Ball(paddle.getX(),
 						(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 			}
@@ -108,20 +121,17 @@ public class Board extends JPanel {
 				} else {
 					score += 500;
 				}
-				frame.setScoreText();
+				panel.setScoreText(score);
 				bricks.remove(hitBrick);
 			}
 		}
 	}
 
 	public void checkWinner() {
-		System.out.println(bricks.size());
 		if (bricks.size() == 0) {
-			System.out.println("NO MORE BRICKS");
 			if (level < 3) {
-				System.out.println("CALL NEXT LEVEL");
 				nextLevel();
-				frame.setLevelText();
+				panel.setLevelText(level);
 			} else {
 				int playAgain = JOptionPane.showConfirmDialog(null,
 						"You win! Would you like to play again?",
@@ -182,7 +192,6 @@ public class Board extends JPanel {
 	}
 
 	private void setLevelTwo() {
-		System.out.println("START LEVEL 2");
 		level = 2;
 		int x = 0;
 		int y = 0;

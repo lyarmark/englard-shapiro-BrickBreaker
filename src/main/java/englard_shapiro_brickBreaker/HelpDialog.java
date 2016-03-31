@@ -15,6 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class HelpDialog extends JDialog {
 	private Font pristinaFont;
 
