@@ -31,7 +31,7 @@ public class Board extends JPanel {
 		ball = new Ball(BOARD_WIDTH / 2,
 				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 		bricks = new ArrayList<Piece>();
-		setLevelTwo();
+		setLevelOne();
 		livesLeft = 3;
 		score = 0;
 		this.frame = frame;
@@ -121,6 +121,7 @@ public class Board extends JPanel {
 			if (level < 3) {
 				System.out.println("CALL NEXT LEVEL");
 				nextLevel();
+				frame.setLevelText();
 			} else {
 				int playAgain = JOptionPane.showConfirmDialog(null,
 						"You win! Would you like to play again?",
@@ -275,6 +276,10 @@ public class Board extends JPanel {
 		return score;
 	}
 
+	public int getLevel() {
+		return level;
+	}
+	
 	public void addLivesLeft() {
 		livesLeft++;
 	}
@@ -290,4 +295,5 @@ public class Board extends JPanel {
 	public void setPowerY(int powerY) {
 		this.powerY = powerY;
 	}
+
 }

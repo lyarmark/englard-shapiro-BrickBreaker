@@ -34,7 +34,8 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	private boolean right = false;
 	private int speed = 2;
 	private JLabel pauseLabel;
-	private JButton help;
+	private JLabel levelLabel;
+	//private JButton help;
 	private HelpDialog helpDialog;
 
 	private PowerUp power;
@@ -66,7 +67,8 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 				music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
+				TimeUnit.SECONDS);
 
 		play = new Runnable() {
 
@@ -119,42 +121,46 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 
 		scorePanel.setBackground(Color.BLACK);
 		scorePanel.setLayout(new GridLayout(0, 3));
-		lives = new JLabel();
 		lives.setBackground(Color.BLACK);
 		lives.setForeground(Color.WHITE);
 		lives.setFont(new Font(lives.getFont().getName(), Font.PLAIN, 24));
 		setLivesText(3);
-		scorePanel.add(lives, BorderLayout.WEST);
-		score = new JLabel("   Score: 0 ");
 		score.setBackground(Color.BLACK);
 		score.setForeground(Color.WHITE);
 		score.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
-		help = new JButton("HELP");
-		help.setBackground(Color.BLACK);
-		help.setForeground(Color.WHITE);
-		help.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
+		levelLabel.setForeground(Color.WHITE);
+		levelLabel.setBackground(Color.BLACK);
+		levelLabel.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
+		// help = new JButton("HELP");
+		// help.setBackground(Color.BLACK);
+		// help.setForeground(Color.WHITE);
+		// help.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
+		scorePanel.add(lives, BorderLayout.WEST);
 		scorePanel.add(score, BorderLayout.CENTER);
-		scorePanel.add(help, BorderLayout.EAST);
+		scorePanel.add(levelLabel, BorderLayout.EAST);
 		pauseLabel.setForeground(Color.WHITE);
 		pauseLabel.setOpaque(false);
 		pauseLabel.setFont(new Font("Arial", Font.BOLD, 60));
-		container.add(pauseLabel).setBounds(215, 230, 300, 100);
+		container.add(pauseLabel).setBounds(200, 230, 250, 100);
 		pauseLabel.setVisible(false);
+
 		helpDialog = new HelpDialog();
 		helpDialog.setLocationRelativeTo(this);
 		isPaused = true;
 
-		help.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				displayHelp();
-			}
-		});
+		/*
+		 * help.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { displayHelp(); } });
+		 */
 	}
 
 	private void createComponents() {
 		board = new Board(this);
 		scorePanel = new JPanel(new BorderLayout());
 		isPaused = false;
+		score = new JLabel("      Score: 0 ");
+		lives = new JLabel();
+		levelLabel = new JLabel("          Level: 1");
 		pauseLabel = new JLabel("PAUSE");
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
@@ -165,11 +171,18 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		left = (c == KeyEvent.VK_LEFT);
 		right = (c == KeyEvent.VK_RIGHT);
 		if (c == KeyEvent.VK_P) {
-			isPaused = true;
-			pauseLabel.setVisible(true);
-		} else if (c == KeyEvent.VK_R) {
-			isPaused = false;
-			pauseLabel.setVisible(false);
+			if(isPaused){
+				pauseLabel.setVisible(false);
+			}
+			else{
+				pauseLabel.setVisible(true);
+			}
+			isPaused = !isPaused;
+			
+		} 
+		else if (c == KeyEvent.VK_H) {
+			//NEEDS HELP STILL :)
+			displayHelp();
 		}
 	}
 
@@ -184,19 +197,19 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	}
 
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-	}
+		}
 
 	public void restart() {
 		board = new Board(this);
 		add(board, BorderLayout.CENTER);
 		setLivesText(3);
 		setScoreText();
+		setLevelText();
 	}
 
 	public void setLivesText(int numLives) {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Lives: ");
+		builder.append(" Lives: ");
 		builder.append(numLives + " ");
 		for (int i = 1; i <= numLives; i++) {
 			builder.append("\u25CF ");
@@ -205,9 +218,12 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	}
 
 	public void setScoreText() {
-		score.setText("   Score: " + board.getScore() + " ");
+		score.setText("      Score: " + board.getScore() + " ");
 	}
 
+	public void setLevelText(){
+		levelLabel.setText("          Level: " + board.getLevel());
+	}
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
