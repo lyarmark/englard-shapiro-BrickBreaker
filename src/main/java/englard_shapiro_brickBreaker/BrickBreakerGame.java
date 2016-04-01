@@ -133,7 +133,6 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 				pauseLabel.setVisible(true);
 			}
 			isPaused = !isPaused;
-
 		}
 	}
 

@@ -4,9 +4,6 @@ public abstract class PowerUp {
 
 	private int diameter = 10;
 
-	public void powerUp(BrickBreakerGame game) {
-	}
-
 	public boolean checkHitPaddle(int x, int y, int paddleLength, int yPosition, int xPosition) {
 		boolean hit = checkTopPaddle(x, y, paddleLength, yPosition, xPosition);
 		if (!hit) {
@@ -40,5 +37,7 @@ public abstract class PowerUp {
 	private boolean leftSide(int x, int xPosition) {
 		return (((xPosition + diameter) >= x) && (xPosition < x));
 	}
+	
+	public abstract void powerUp(BrickBreakerGame game);
 
 }
