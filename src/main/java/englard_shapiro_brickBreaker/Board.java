@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class Board extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -20,48 +22,48 @@ public class Board extends JPanel {
 	public static final int BOARD_HEIGHT = 600;
 	public static final int BOARD_WIDTH = 600;
 	private int livesLeft;
-	private BrickBreakerGame frame;
 	private int score;
 	private int level;
 	private UpperPanel panel;
 	private int powerX;
 	private int powerY;
+	private boolean gameOver;
 
 	@Inject
 	public Board(Paddle paddle, UpperPanel panel) {
-		this.setSize(BOARD_WIDTH, BOARD_HEIGHT);
-		this.setBackground(Color.black);
-		// paddle = new Paddle();
+		setSize(BOARD_WIDTH, BOARD_HEIGHT);
+		setBackground(Color.black);
 		setLayout(new BorderLayout());
 		this.panel = panel;
 		this.paddle = paddle;
-		ball = new Ball(BOARD_WIDTH / 2, (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
+		ball = new Ball(BOARD_WIDTH / 2,
+				(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 		bricks = new ArrayList<Piece>();
 		setLevelOne();
 		livesLeft = 3;
 		score = 0;
+		gameOver = false;
 		add(panel, BorderLayout.NORTH);
 		setVisible(true);
-	}
-
-	public Board() {
-		// UH OH!!
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.BLUE);
-		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(), Paddle.PADDLE_HEIGHT);
+		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(),
+				Paddle.PADDLE_HEIGHT);
 		g.setColor(Color.white);
-		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER, Ball.BALL_DIAMETER);
+		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER,
+				Ball.BALL_DIAMETER);
 		// create loop to set up all pieces - make array of pieces
 		for (int i = 0; i < bricks.size(); i++) {
 			Piece brick = bricks.get(i);
 			g.setColor(brick.getColor());
-			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
+			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
+					Piece.BRICK_WIDTH);
 			g.setColor(Color.BLACK);
-			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
+			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
+					Piece.BRICK_WIDTH);
 		}
 		g.setColor(Color.MAGENTA);
 		g.fillOval(powerX, powerY, 10, 10);
@@ -83,20 +85,22 @@ public class Board extends JPanel {
 			// the ball died
 			// pause time thread.sleep not working
 			if (livesLeft == 0) {
-				int playAgain = JOptionPane.showConfirmDialog(null, "Game over! Would you like to play again?",
-						"Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+				int playAgain = JOptionPane.showConfirmDialog(null,
+						"Game over! Would you like to play again?",
+						"Game Over", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/gameOver.jpg")));
 				if (playAgain == 0) {
-					frame.restart();
+					restart();
 				} else {
-					frame.dispose();
-					System.exit(0);
+					gameOver = true;
 				}
 			} else {
 				// send in new ball , remove this ball
 				livesLeft--;
 				panel.setLivesText(livesLeft);
-				ball = new Ball(paddle.getX(), (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
+				ball = new Ball(paddle.getX(),
+						(paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 			}
 		} else {
 			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
@@ -125,14 +129,15 @@ public class Board extends JPanel {
 				nextLevel();
 				panel.setLevelText(level);
 			} else {
-				int playAgain = JOptionPane.showConfirmDialog(null, "You win! Would you like to play again?",
-						"Congratulations!!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+				int playAgain = JOptionPane.showConfirmDialog(null,
+						"You win! Would you like to play again?",
+						"Congratulations!!", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/winner.jpg")));
 				if (playAgain == 0) {
-					frame.restart();
+					restart();
 				} else {
-					frame.dispose();
-					System.exit(0);
+					gameOver = true;
 				}
 			}
 		}
@@ -149,7 +154,7 @@ public class Board extends JPanel {
 	private void setLevelOne() {
 		level = 1;
 		int x = 0;
-		int y = 50;
+		int y = 60;
 		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.RED));
 			x += 50;
@@ -297,6 +302,21 @@ public class Board extends JPanel {
 
 	public Paddle getPaddle() {
 		return paddle;
+	}
+
+	public void restart() {
+		bricks.clear();
+		setLevelOne();
+		score = 0;
+		// SHOULD BE 3, but 4 works ?!!
+		livesLeft = 4;
+		panel.setLevelText(1);
+		panel.setLivesText(livesLeft);
+		panel.setScoreText(score);
+	}
+
+	public boolean gameOver() {
+		return gameOver;
 	}
 
 }

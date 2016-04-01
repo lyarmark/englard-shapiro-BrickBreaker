@@ -9,13 +9,12 @@ public class Paddle {
 	private int xPos;
 	private int yPos;
 	private int paddleLength;
-	//public static final int PADDLE_LENGTH = 80;
 	public static final int PADDLE_HEIGHT = 15;
 
 	public Paddle() {
 		paddleLength = 80;
 		xPos = (Board.BOARD_WIDTH - paddleLength) / 2;
-		yPos = (Board.BOARD_HEIGHT - PADDLE_HEIGHT) - 50;
+		yPos = (Board.BOARD_HEIGHT - PADDLE_HEIGHT) - 40;
 	}
 
 	public int getX() {
@@ -26,13 +25,14 @@ public class Paddle {
 		return yPos;
 	}
 
-	public int getPaddleLength(){
+	public int getPaddleLength() {
 		return paddleLength;
 	}
-	
-	public void setPaddleLength(int length){
+
+	public void setPaddleLength(int length) {
 		paddleLength = length;
 	}
+
 	public void moveLeft() {
 		if (xPos - MOVE_AMOUNT >= 0) {
 			xPos -= MOVE_AMOUNT;
