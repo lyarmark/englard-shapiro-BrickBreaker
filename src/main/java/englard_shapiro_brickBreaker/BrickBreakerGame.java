@@ -4,10 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Random;
@@ -15,13 +11,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 //@Singleton
 public class BrickBreakerGame extends JFrame implements KeyListener {
@@ -264,11 +258,12 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 
 	private void checkPower(Paddle paddle) {
 		if (startPower) {
-			if (power.checkHitPaddle(x, y, 600, paddle.getY(), paddle.getY())) {
+			if (power.checkHitPaddle(board.getPowerX(), board.getPowerY(), paddle.getPaddleLength(), paddle.getY(),
+					paddle.getX())) {
 				power.powerUp(this);
 				startPower = false;
 			}
-			if (y >= board.BOARD_HEIGHT) {
+			if (y >= Board.BOARD_HEIGHT) {
 				startPower = false;
 			}
 			board.setPowerY(y++);
@@ -283,5 +278,6 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 			board.setPowerX(x);
 			board.setPowerY(y);
 		}
+		board.setPowerUp(power);
 	}
 }

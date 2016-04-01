@@ -1,6 +1,5 @@
 package englard_shapiro_brickBreaker;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -11,6 +10,8 @@ import javax.swing.JPanel;
 import com.google.inject.Singleton;
 @Singleton
 public class UpperPanel extends JPanel{
+
+	private static final long serialVersionUID = 1L;
 	private JLabel lives;
 	private JLabel score;	
 	private JLabel levels;

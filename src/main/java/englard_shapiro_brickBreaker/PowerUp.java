@@ -1,11 +1,8 @@
 package englard_shapiro_brickBreaker;
 
-import javax.swing.JComponent;
+public abstract class PowerUp {
 
-public abstract class PowerUp extends JComponent {
-
-	private static final long serialVersionUID = 1L;
-	private int diameter;
+	private int diameter = 10;
 
 	public void powerUp(BrickBreakerGame game) {
 	}
@@ -19,8 +16,8 @@ public abstract class PowerUp extends JComponent {
 	}
 
 	private boolean checkTopPaddle(int x, int y, int paddleLength, int yPosition, int xPosition) {
-		if (yPosition + diameter == (y)) {
-			if (xPosition < (x + paddleLength) && xPosition > x) {
+		if (y + diameter == (yPosition-1)) {
+			if (x <= (xPosition + paddleLength) && x >= xPosition) {
 				return true;
 			}
 		}
@@ -29,7 +26,8 @@ public abstract class PowerUp extends JComponent {
 
 	private boolean checkSidePaddle(int x, int y, int paddleLength, int yPosition, int xPosition) {
 
-		if (((leftSide(x, xPosition) || rightSide(x, paddleLength, xPosition)) && yPosition + diameter >= y && yPosition + diameter <= (y + Paddle.PADDLE_HEIGHT))) {
+		if (((leftSide(x, xPosition) || rightSide(x, paddleLength, xPosition)) && yPosition + diameter >= y && yPosition
+				+ diameter <= (y + Paddle.PADDLE_HEIGHT))) {
 			return true;
 		}
 		return false;

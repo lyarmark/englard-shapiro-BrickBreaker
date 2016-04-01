@@ -26,6 +26,7 @@ public class Board extends JPanel {
 	private UpperPanel panel;
 	private int powerX;
 	private int powerY;
+	private PowerUp powerUp;
 
 	@Inject
 	public Board(Paddle paddle, UpperPanel panel) {
@@ -271,6 +272,14 @@ public class Board extends JPanel {
 		repaint();
 	}
 
+	public int getPowerX() {
+		return powerX;
+	}
+
+	public int getPowerY() {
+		return powerY;
+	}
+
 	public int getScore() {
 		return score;
 	}
@@ -297,6 +306,10 @@ public class Board extends JPanel {
 
 	public Paddle getPaddle() {
 		return paddle;
+	}
+
+	public void setPowerUp(PowerUp powerUp) {
+		this.powerUp = powerUp;
 	}
 
 }
