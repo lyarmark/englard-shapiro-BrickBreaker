@@ -29,6 +29,7 @@ public class Board extends JPanel {
 	private int powerY;
 	private PowerUp powerUp;
 	private boolean gameOver;
+	private boolean startPower;
 
 	@Inject
 	public Board(Paddle paddle, UpperPanel panel) {
@@ -61,8 +62,9 @@ public class Board extends JPanel {
 			g.setColor(Color.BLACK);
 			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
 		}
-		g.setColor(Color.MAGENTA);
-		g.fillOval(powerX, powerY, 10, 10);
+		if (startPower == true) {
+			powerUp.draw(g, powerX, powerY);
+		} 
 	}
 
 	public void movePaddleLeft() {
@@ -320,6 +322,14 @@ public class Board extends JPanel {
 
 	public boolean gameOver() {
 		return gameOver;
+	}
+
+	public boolean isStartPower() {
+		return startPower;
+	}
+
+	public void setStartPower(boolean startPower) {
+		this.startPower = startPower;
 	}
 
 }
