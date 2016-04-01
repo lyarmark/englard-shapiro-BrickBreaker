@@ -28,12 +28,11 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	private Runnable play;
 	private boolean left = false;
 	private boolean right = false;
-	private int speed = 2;
+	private int speed = 7;
 	private JLabel pauseLabel;
 
 	private PowerUp power;
 	private PowerUp[] powers;
-	private boolean startPower;
 	private int x;
 	private int y;
 
@@ -167,7 +166,6 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		// from 0-param, including 0, excluding param
 		int powerIndex = random.nextInt(1);
 		this.power = powers[powerIndex];
-		power.powerUp(this);
 	}
 
 	public PowerUp getPower() {
@@ -175,27 +173,31 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	}
 
 	private void checkPower(Paddle paddle) {
-		if (startPower) {
+		if (board.isStartPower()) {
 			if (power.checkHitPaddle(board.getPowerX(), board.getPowerY(), paddle.getPaddleLength(), paddle.getY(),
 					paddle.getX())) {
 				power.powerUp(this);
-				startPower = false;
+				power = null;
+				board.setStartPower(false);
 			}
 			if (y >= Board.BOARD_HEIGHT) {
-				startPower = false;
+				power = null;
+				board.setStartPower(false);
 			}
 			board.setPowerY(y++);
 		}
 
 		// send a power down every X points
-		if ((board.getScore() % 30) == 0 && startPower == false) {
-			startPower = true;
+		if ((board.getScore() % 30) == 0 && !board.isStartPower() && power == null) {
+			board.setStartPower(true);
 			setPower();
 			x = 300;
 			y = 20;
 			board.setPowerX(x);
 			board.setPowerY(y);
+			board.setPowerUp(power);
+		} else if ((board.getScore() % 40) == 0 && power != null && !board.isStartPower()) {
+			power.undoPowerUp(this);
 		}
-		board.setPowerUp(power);
 	}
 }

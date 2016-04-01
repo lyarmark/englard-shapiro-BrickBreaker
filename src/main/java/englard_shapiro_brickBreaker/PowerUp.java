@@ -1,8 +1,16 @@
 package englard_shapiro_brickBreaker;
 
+import java.awt.Graphics;
+
 public abstract class PowerUp {
 
-	private int diameter = 10;
+	final static int DIAMETER = 20;
+
+	public abstract void powerUp(BrickBreakerGame game);
+
+	public abstract void undoPowerUp(BrickBreakerGame game);
+
+	public abstract void draw(Graphics g, int powerX, int powerY);
 
 	public boolean checkHitPaddle(int x, int y, int paddleLength, int yPosition, int xPosition) {
 		boolean hit = checkTopPaddle(x, y, paddleLength, yPosition, xPosition);
@@ -13,7 +21,7 @@ public abstract class PowerUp {
 	}
 
 	private boolean checkTopPaddle(int x, int y, int paddleLength, int yPosition, int xPosition) {
-		if (y + diameter == (yPosition-1)) {
+		if (y + DIAMETER == (yPosition - 1)) {
 			if (x <= (xPosition + paddleLength) && x >= xPosition) {
 				return true;
 			}
@@ -23,8 +31,8 @@ public abstract class PowerUp {
 
 	private boolean checkSidePaddle(int x, int y, int paddleLength, int yPosition, int xPosition) {
 
-		if (((leftSide(x, xPosition) || rightSide(x, paddleLength, xPosition)) && yPosition + diameter >= y && yPosition
-				+ diameter <= (y + Paddle.PADDLE_HEIGHT))) {
+		if (((leftSide(x, xPosition) || rightSide(x, paddleLength, xPosition)) && yPosition + DIAMETER >= y && yPosition
+				+ DIAMETER <= (y + Paddle.PADDLE_HEIGHT))) {
 			return true;
 		}
 		return false;
@@ -35,9 +43,6 @@ public abstract class PowerUp {
 	}
 
 	private boolean leftSide(int x, int xPosition) {
-		return (((xPosition + diameter) >= x) && (xPosition < x));
+		return (((xPosition + DIAMETER) >= x) && (xPosition < x));
 	}
-	
-	public abstract void powerUp(BrickBreakerGame game);
-
 }
