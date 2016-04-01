@@ -13,16 +13,14 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
-//@Singleton
+@Singleton
 public class BrickBreakerGame extends JFrame implements KeyListener {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel scorePanel;
-	// private JLabel lives, score;
 	private Board board;
 	private boolean isPaused;
 	private ScheduledExecutorService musicExecutor;
@@ -32,9 +30,6 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	private boolean right = false;
 	private int speed = 2;
 	private JLabel pauseLabel;
-	// private JLabel levelLabel;
-	// private JButton help;
-	private HelpDialog helpDialog;
 
 	private PowerUp power;
 	private PowerUp[] powers;
@@ -52,7 +47,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		this.board = board;
 		createComponents();
 		setProperties();
-		addComponents();
+		add(board, BorderLayout.CENTER);
 		addPowerUps();
 		RunGame();
 		isPaused = false;
@@ -72,7 +67,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		play = new Runnable() {
 
 			public void run() {
-				while (true) {
+				while (!board.gameOver()) {
 					try {
 						if (isPaused) {
 							Thread.sleep(100);
@@ -88,6 +83,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 						System.out.println("Interrupted thread exception");
 					}
 				}
+				dispose();
 			}
 
 		};
@@ -107,56 +103,20 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		}
 	}
 
-	private void addComponents() {
-		add(scorePanel, BorderLayout.NORTH);
-		add(board, BorderLayout.CENTER);
-	}
-
 	private void setProperties() {
 		Container container = getContentPane();
 		container.setLayout(new BorderLayout());
 		container.setFocusable(true);
 		container.addKeyListener(this);
-
-		/*
-		 * scorePanel.setBackground(Color.BLACK); scorePanel.setLayout(new
-		 * GridLayout(0, 3)); lives.setBackground(Color.BLACK);
-		 * lives.setForeground(Color.WHITE); lives.setFont(new
-		 * Font(lives.getFont().getName(), Font.PLAIN, 24)); setLivesText(3);
-		 * score.setBackground(Color.BLACK); score.setForeground(Color.WHITE);
-		 * score.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
-		 * levelLabel.setForeground(Color.WHITE);
-		 * levelLabel.setBackground(Color.BLACK); levelLabel.setFont(new
-		 * Font(levelLabel.getFont().getName(), Font.PLAIN, 24)); // help = new
-		 * JButton("HELP"); // help.setBackground(Color.BLACK); //
-		 * help.setForeground(Color.WHITE); // help.setFont(new
-		 * Font(score.getFont().getName(), Font.PLAIN, 24));
-		 * scorePanel.add(lives, BorderLayout.WEST); scorePanel.add(score,
-		 * BorderLayout.CENTER); scorePanel.add(levelLabel, BorderLayout.EAST);
-		 */
 		pauseLabel.setForeground(Color.WHITE);
 		pauseLabel.setOpaque(false);
 		pauseLabel.setFont(new Font("Arial", Font.BOLD, 60));
 		container.add(pauseLabel).setBounds(200, 230, 250, 100);
 		pauseLabel.setVisible(false);
-
-		helpDialog = new HelpDialog();
-		helpDialog.setLocationRelativeTo(this);
-		isPaused = true;
-
-		/*
-		 * help.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { displayHelp(); } });
-		 */
 	}
 
 	private void createComponents() {
-		// board = new Board(this);
-		scorePanel = new JPanel(new BorderLayout());
 		isPaused = false;
-		// score = new JLabel("        Score: 0 ");
-		// lives = new JLabel();
-		// levelLabel = new JLabel("               Level: 1");
 		pauseLabel = new JLabel("PAUSE");
 		this.musicExecutor = Executors.newScheduledThreadPool(1);
 		music = new MusicThread();
@@ -174,9 +134,6 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 			}
 			isPaused = !isPaused;
 
-		} else if (c == KeyEvent.VK_H) {
-			// NEEDS HELP STILL :)
-			displayHelp();
 		}
 	}
 
@@ -193,50 +150,12 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	public void keyTyped(KeyEvent arg0) {
 	}
 
-	public void restart() {
-		// WORK ON RESTART
-		board = new Board();
-		add(board, BorderLayout.CENTER);
-		// setLivesText(3);
-		// setScoreText();
-		// setLevelText();
-	}
-
-	/*
-	 * public void setLivesText(int numLives) { StringBuilder builder = new
-	 * StringBuilder(); builder.append(" Lives: "); //builder.append(numLives +
-	 * " "); for (int i = 1; i <= numLives; i++) { builder.append("\u25CF "); }
-	 * lives.setText(builder.toString()); }
-	 * 
-	 * public void setScoreText() { score.setText("        Score: " +
-	 * board.getScore() + " "); }
-	 * 
-	 * public void setLevelText(){ levelLabel.setText("               Level: " +
-	 * board.getLevel()); }
-	 */
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 
 	public int getSpeed() {
 		return speed;
-	}
-
-	public void displayHelp() {
-		try {
-			// HelpDialog helpDialog = new HelpDialog();
-			// helpDialog.setLocationRelativeTo(this);
-			helpDialog.setVisible(true);
-			helpDialog.requestFocus();
-			isPaused = true;
-			Thread.sleep(5000);
-			helpDialog.setVisible(false);
-			// set focus for paddle
-			board.requestFocus();
-			isPaused = false;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void addPowerUps() {

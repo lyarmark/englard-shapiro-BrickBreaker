@@ -19,20 +19,21 @@ public class UpperPanel extends JPanel{
 	public UpperPanel(){
 		setBackground(Color.BLACK);
 		setLayout(new GridLayout(0, 3));
-		score = new JLabel("        Score: 0 ");
-		lives = new JLabel();
-		levels = new JLabel("               Level: 1");
 		
-		lives.setBackground(Color.BLACK);
+		score = new JLabel();
+		lives = new JLabel();
+		levels = new JLabel();
+		
 		lives.setForeground(Color.WHITE);
 		lives.setFont(new Font(lives.getFont().getName(), Font.PLAIN, 24));
 		setLivesText(3);
-		score.setBackground(Color.BLACK);
 		score.setForeground(Color.WHITE);
 		score.setFont(new Font(score.getFont().getName(), Font.PLAIN, 24));
+		setScoreText(0);
 		levels.setForeground(Color.WHITE);
-		levels.setBackground(Color.BLACK);
 		levels.setFont(new Font(levels.getFont().getName(), Font.PLAIN, 24));
+		setLevelText(1);
+		
 		add(lives);
 		add(score);
 		add(levels);
@@ -42,14 +43,14 @@ public class UpperPanel extends JPanel{
 		StringBuilder builder = new StringBuilder();
 		builder.append(" Lives: ");
 		//builder.append(numLives + " ");
-		for (int i = 1; i <= numLives; i++) {
+		for (int i = 0; i < numLives; i++) {
 			builder.append("\u25CF ");
 		}
 		lives.setText(builder.toString());
 	}
 
 	public void setScoreText(int scoreNum) {
-		score.setText("        Score: " + score + " ");
+		score.setText("       Score: " + scoreNum + " ");
 	}
 
 	public void setLevelText(int level){

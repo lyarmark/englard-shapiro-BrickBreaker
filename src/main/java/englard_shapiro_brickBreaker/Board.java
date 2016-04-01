@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
+@Singleton
 public class Board extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -20,19 +22,18 @@ public class Board extends JPanel {
 	public static final int BOARD_HEIGHT = 600;
 	public static final int BOARD_WIDTH = 600;
 	private int livesLeft;
-	private BrickBreakerGame frame;
 	private int score;
 	private int level;
 	private UpperPanel panel;
 	private int powerX;
 	private int powerY;
 	private PowerUp powerUp;
+	private boolean gameOver;
 
 	@Inject
 	public Board(Paddle paddle, UpperPanel panel) {
-		this.setSize(BOARD_WIDTH, BOARD_HEIGHT);
-		this.setBackground(Color.black);
-		// paddle = new Paddle();
+		setSize(BOARD_WIDTH, BOARD_HEIGHT);
+		setBackground(Color.black);
 		setLayout(new BorderLayout());
 		this.panel = panel;
 		this.paddle = paddle;
@@ -41,13 +42,9 @@ public class Board extends JPanel {
 		setLevelOne();
 		livesLeft = 3;
 		score = 0;
+		gameOver = false;
 		add(panel, BorderLayout.NORTH);
 		setVisible(true);
-	}
-
-	public Board() {
-		// UH OH!!
-		// TODO Auto-generated constructor stub
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -88,10 +85,9 @@ public class Board extends JPanel {
 						"Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/gameOver.jpg")));
 				if (playAgain == 0) {
-					frame.restart();
+					restart();
 				} else {
-					frame.dispose();
-					System.exit(0);
+					gameOver = true;
 				}
 			} else {
 				// send in new ball , remove this ball
@@ -130,10 +126,9 @@ public class Board extends JPanel {
 						"Congratulations!!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/winner.jpg")));
 				if (playAgain == 0) {
-					frame.restart();
+					restart();
 				} else {
-					frame.dispose();
-					System.exit(0);
+					gameOver = true;
 				}
 			}
 		}
@@ -150,7 +145,7 @@ public class Board extends JPanel {
 	private void setLevelOne() {
 		level = 1;
 		int x = 0;
-		int y = 50;
+		int y = 60;
 		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.RED));
 			x += 50;
@@ -310,6 +305,21 @@ public class Board extends JPanel {
 
 	public void setPowerUp(PowerUp powerUp) {
 		this.powerUp = powerUp;
+	}
+
+	public void restart() {
+		bricks.clear();
+		setLevelOne();
+		score = 0;
+		// SHOULD BE 3, but 4 works ?!!
+		livesLeft = 4;
+		panel.setLevelText(1);
+		panel.setLivesText(livesLeft);
+		panel.setScoreText(score);
+	}
+
+	public boolean gameOver() {
+		return gameOver;
 	}
 
 }
