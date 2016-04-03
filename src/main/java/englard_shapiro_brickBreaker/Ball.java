@@ -19,8 +19,7 @@ public class Ball {
 	@Inject
 	public Ball(Paddle paddle) {
 		this.paddle = paddle;
-		xPos = Board.BOARD_WIDTH / 2;
-		yPos = (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10;
+		setDefault();
 		moveUp = true;
 		moveRight = true;
 		moveDown = false;
@@ -28,17 +27,11 @@ public class Ball {
 		brickHit = false;
 	}
 
-	public Ball(int x, int y, Paddle paddle) {
-		this.paddle = paddle;
-		xPos = x;
-		yPos = y;
-		moveUp = true;
-		moveRight = true;
-		moveDown = false;
-		moveLeft = false;
-		brickHit = false;
+	public void setDefault() {
+		xPos = Board.BOARD_WIDTH / 2 - 3;
+		yPos = paddle.getY() - Paddle.PADDLE_HEIGHT + 3;
 	}
-
+	
 	// returns brick that was hit or null if no brick hit
 	public Piece move(int paddleX, int paddleY, ArrayList<Piece> bricks) {
 		brickHit = false;
@@ -83,7 +76,7 @@ public class Ball {
 	}
 
 	private void checkTopWall() {
-		if (yPos <= 0) {
+		if (yPos <= 35) {
 			switchUpandDown();
 		}
 	}
@@ -148,7 +141,6 @@ public class Ball {
 
 	private void checkBrickLeft(Piece brick) {
 		int brickY = brick.getY();
-
 		if ((xPos + BALL_DIAMETER >= brick.getX()) && xPos < brick.getX()
 				&& (yPos + BALL_DIAMETER <= (brickY + Piece.BRICK_WIDTH)) && (yPos + BALL_DIAMETER >= brickY)) {
 			switchRightandLeft();
@@ -213,5 +205,5 @@ public class Ball {
 
 	public int getY() {
 		return yPos;
-	}
+	}	
 }

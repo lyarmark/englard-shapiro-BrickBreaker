@@ -13,10 +13,15 @@ public class Paddle {
 
 	public Paddle() {
 		paddleLength = 80;
+		setDefault();
+		}
+
+	public void setDefault(){
 		xPos = (Board.BOARD_WIDTH - paddleLength) / 2;
 		yPos = (Board.BOARD_HEIGHT - PADDLE_HEIGHT) - 40;
+		paddleLength = 80;
 	}
-
+	
 	public int getX() {
 		return xPos;
 	}
@@ -29,10 +34,13 @@ public class Paddle {
 		return paddleLength;
 	}
 
-	public void setPaddleLength(int length) {
-		paddleLength = length;
+	public void setPaddleMini(){
+		paddleLength = 55;
 	}
-
+	public void setPaddleLong(){
+		paddleLength = 160;
+	}
+	
 	public void moveLeft() {
 		if (xPos - MOVE_AMOUNT >= 0) {
 			xPos -= MOVE_AMOUNT;
@@ -40,8 +48,7 @@ public class Paddle {
 	}
 
 	public void moveRight() {
-
-		if (xPos + MOVE_AMOUNT <= (Board.BOARD_WIDTH - paddleLength)) {
+		if (xPos + MOVE_AMOUNT + 5 < (Board.BOARD_WIDTH - paddleLength)) {
 			xPos += MOVE_AMOUNT;
 		}
 	}

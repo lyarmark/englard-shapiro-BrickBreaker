@@ -50,7 +50,7 @@ public class UpperPanel extends JPanel{
 	}
 
 	public void setScoreText(int scoreNum) {
-		score.setText("       Score: " + scoreNum + " ");
+		score.setText("      Score: " + scoreNum + " ");
 	}
 
 	public void setLevelText(int level){

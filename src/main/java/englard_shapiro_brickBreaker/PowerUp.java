@@ -8,8 +8,6 @@ public abstract class PowerUp {
 
 	public abstract void powerUp(BrickBreakerGame game);
 
-	public abstract void undoPowerUp(BrickBreakerGame game);
-
 	public abstract void draw(Graphics g, int powerX, int powerY);
 
 	public boolean checkHitPaddle(int x, int y, int paddleLength, int yPosition, int xPosition) {

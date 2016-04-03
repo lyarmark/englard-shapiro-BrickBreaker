@@ -30,28 +30,28 @@ public class Board extends JPanel {
 	private PowerUp powerUp;
 	private boolean gameOver;
 	private boolean startPower;
+	private boolean newBall;
 
 	@Inject
-	public Board(Paddle paddle, UpperPanel panel) {
+	public Board(Paddle paddle, UpperPanel panel, Ball ball) {
 		setSize(BOARD_WIDTH, BOARD_HEIGHT);
 		setBackground(Color.black);
 		setLayout(new BorderLayout());
 		this.panel = panel;
 		this.paddle = paddle;
-		ball = new Ball(BOARD_WIDTH / 2, (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
+		this.ball = ball;
 		bricks = new ArrayList<Piece>();
 		setLevelOne();
 		livesLeft = 3;
 		score = 0;
 		gameOver = false;
+		newBall = true;
 		add(panel, BorderLayout.NORTH);
 		setVisible(true);
 	}
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(Color.BLUE);
-		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(), Paddle.PADDLE_HEIGHT);
 		g.setColor(Color.white);
 		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER, Ball.BALL_DIAMETER);
 		// create loop to set up all pieces - make array of pieces
@@ -65,6 +65,8 @@ public class Board extends JPanel {
 		if (startPower == true) {
 			powerUp.draw(g, powerX, powerY);
 		} 
+		g.setColor(Color.BLUE);
+		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(), Paddle.PADDLE_HEIGHT);
 	}
 
 	public void movePaddleLeft() {
@@ -93,9 +95,13 @@ public class Board extends JPanel {
 				}
 			} else {
 				// send in new ball , remove this ball
+				newBall = true;
+				paddle.setDefault();
+				//ball.setDefault();
 				livesLeft--;
 				panel.setLivesText(livesLeft);
-				ball = new Ball(paddle.getX(), (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
+				ball = new Ball(paddle);
+				//ball = new Ball(paddle.getX(), (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
 			}
 		} else {
 			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
@@ -121,6 +127,8 @@ public class Board extends JPanel {
 	public void checkWinner() {
 		if (bricks.size() == 0) {
 			if (level < 3) {
+				newBall = true;
+				setDefault();
 				nextLevel();
 				panel.setLevelText(level);
 			} else {
@@ -269,6 +277,14 @@ public class Board extends JPanel {
 		repaint();
 	}
 
+	public void setPaddleMini(){
+		paddle.setPaddleMini();
+	}
+	
+	public void setPaddleLong(){
+		paddle.setPaddleLong();
+	}
+	
 	public int getPowerX() {
 		return powerX;
 	}
@@ -313,8 +329,9 @@ public class Board extends JPanel {
 		bricks.clear();
 		setLevelOne();
 		score = 0;
-		// SHOULD BE 3, but 4 works ?!!
-		livesLeft = 4;
+		newBall = true;
+		setDefault();
+		livesLeft = 3;
 		panel.setLevelText(1);
 		panel.setLivesText(livesLeft);
 		panel.setScoreText(score);
@@ -330,6 +347,21 @@ public class Board extends JPanel {
 
 	public void setStartPower(boolean startPower) {
 		this.startPower = startPower;
+	}
+
+	
+	public boolean newBall() {
+		return newBall;
+	}
+
+	public void setNewBall() {
+		newBall = false;
+	}
+
+	public void setDefault() {
+		paddle.setDefault();
+		ball.setDefault();
+		repaint();
 	}
 
 }

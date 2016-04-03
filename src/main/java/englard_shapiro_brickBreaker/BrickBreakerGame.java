@@ -28,9 +28,8 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	private Runnable play;
 	private boolean left = false;
 	private boolean right = false;
-	private int speed = 7;
+	private int speed = 5;
 	private JLabel pauseLabel;
-
 	private PowerUp power;
 	private PowerUp[] powers;
 	private int x;
@@ -48,8 +47,8 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		setProperties();
 		add(board, BorderLayout.CENTER);
 		addPowerUps();
-		RunGame();
 		isPaused = false;
+		RunGame();
 		setVisible(true);
 	}
 
@@ -61,15 +60,19 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 				music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
+				TimeUnit.SECONDS);
 
 		play = new Runnable() {
 
 			public void run() {
 				while (!board.gameOver()) {
 					try {
-						if (isPaused) {
+						if (isPaused || board.newBall()) {
 							Thread.sleep(100);
+							if (board.newBall()) {
+								setDefault();
+							}
 						} else {
 							movePaddle();
 							board.moveBall();
@@ -79,12 +82,11 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 							Thread.sleep(speed);
 						}
 					} catch (InterruptedException e) {
-						System.out.println("Interrupted thread exception");
+						e.printStackTrace();
 					}
 				}
 				dispose();
 			}
-
 		};
 		new Thread(play).start();
 
@@ -132,6 +134,8 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 				pauseLabel.setVisible(true);
 			}
 			isPaused = !isPaused;
+		} else if (c == KeyEvent.VK_SPACE) {
+			board.setNewBall();
 		}
 	}
 
@@ -148,23 +152,37 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	public void keyTyped(KeyEvent arg0) {
 	}
 
-	public void setSpeed(int speed) {
-		this.speed = speed;
+	public void speedUp() {
+		if (speed > 1) {
+			speed -= 1;
+		}
+	}
+
+	public void slowDown() {
+		speed += 1;
 	}
 
 	public int getSpeed() {
 		return speed;
 	}
 
+	public void setPaddleLong() {
+		board.setPaddleLong();
+	}
+
+	public void setPaddleMini() {
+		board.setPaddleMini();
+	}
+
 	public void addPowerUps() {
-		powers = new PowerUp[1];
-		powers[0] = new PowerUpSpeed();
+		powers = new PowerUp[] { new PowerUpFast(), new PowerUpSlow(),
+				new PowerUpMini(), new PowerUpLong() };
 	}
 
 	public void setPower() {
 		Random random = new Random();
 		// from 0-param, including 0, excluding param
-		int powerIndex = random.nextInt(1);
+		int powerIndex = random.nextInt(4);
 		this.power = powers[powerIndex];
 	}
 
@@ -174,8 +192,8 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 
 	private void checkPower(Paddle paddle) {
 		if (board.isStartPower()) {
-			if (power.checkHitPaddle(board.getPowerX(), board.getPowerY(), paddle.getPaddleLength(), paddle.getY(),
-					paddle.getX())) {
+			if (power.checkHitPaddle(board.getPowerX(), board.getPowerY(),
+					paddle.getPaddleLength(), paddle.getY(), paddle.getX())) {
 				power.powerUp(this);
 				power = null;
 				board.setStartPower(false);
@@ -188,16 +206,21 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		}
 
 		// send a power down every X points
-		if ((board.getScore() % 30) == 0 && !board.isStartPower() && power == null) {
+		if ((board.getScore() % 30) == 0 && !board.isStartPower()
+				&& power == null) {
 			board.setStartPower(true);
 			setPower();
-			x = 300;
+			Random random = new Random();
+			x = 50 + random.nextInt(500);
 			y = 20;
 			board.setPowerX(x);
 			board.setPowerY(y);
 			board.setPowerUp(power);
-		} else if ((board.getScore() % 40) == 0 && power != null && !board.isStartPower()) {
-			power.undoPowerUp(this);
 		}
+	}
+
+	public void setDefault() {
+		speed = 5;
+		board.setDefault();
 	}
 }
