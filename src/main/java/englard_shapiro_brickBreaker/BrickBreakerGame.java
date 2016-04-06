@@ -62,8 +62,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 				music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
-				TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
 
 		play = new Runnable() {
 
@@ -177,8 +176,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	}
 
 	public void addPowerUps() {
-		powers = new PowerUp[] { new PowerUpFast(), new PowerUpSlow(),
-				new PowerUpMini(), new PowerUpLong() };
+		powers = new PowerUp[] { new PowerUpFast(), new PowerUpSlow(), new PowerUpMini(), new PowerUpLong() };
 	}
 
 	public void setPower() {
@@ -196,9 +194,8 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		if (board.isStartPower()) {
 			if (board.newBall()) {
 				board.setStartPower(false);
-			} else if (power.checkHitPaddle(board.getPowerX(),
-					board.getPowerY(), paddle.getPaddleLength(), paddle.getY(),
-					paddle.getX())) {
+			} else if (power.checkHitPaddle(board.getPowerX(), board.getPowerY(), paddle.getPaddleLength(),
+					paddle.getY(), paddle.getX())) {
 				power.powerUp(this);
 				power = null;
 				board.setStartPower(false);
@@ -210,16 +207,17 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		}
 
 		// send a power down every X points
-		if ((board.getScore() % 30) == 0 && !board.isStartPower()
-				&& power == null) {
-			board.setStartPower(true);
-			setPower();
-			Random random = new Random();
-			x = 50 + random.nextInt(500);
-			y = 20;
-			board.setPowerX(x);
-			board.setPowerY(y);
-			board.setPowerUp(power);
+		if (((board.getScore() % 30) == 0)) {
+			if (!board.isStartPower()) {
+				board.setStartPower(true);
+				setPower();
+				Random random = new Random();
+				x = 50 + random.nextInt(500);
+				y = 20;
+				board.setPowerX(x);
+				board.setPowerY(y);
+				board.setPowerUp(power);
+			}
 		}
 	}
 
