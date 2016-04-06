@@ -91,7 +91,7 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		};
 		new Thread(play).start();
 
-	}
+	}l
 
 	private void movePaddle() {
 		if (left) {
