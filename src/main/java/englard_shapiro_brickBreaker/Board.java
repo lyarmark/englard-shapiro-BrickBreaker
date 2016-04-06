@@ -42,7 +42,7 @@ public class Board extends JPanel {
 		this.ball = ball;
 		bricks = new ArrayList<Piece>();
 		setLevelOne();
-		livesLeft = 3;
+		livesLeft = 10;
 		score = 0;
 		gameOver = false;
 		newBall = true;
@@ -53,20 +53,24 @@ public class Board extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.white);
-		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER, Ball.BALL_DIAMETER);
+		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER,
+				Ball.BALL_DIAMETER);
 		// create loop to set up all pieces - make array of pieces
 		for (int i = 0; i < bricks.size(); i++) {
 			Piece brick = bricks.get(i);
 			g.setColor(brick.getColor());
-			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
+			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
+					Piece.BRICK_WIDTH);
 			g.setColor(Color.BLACK);
-			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
+			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
+					Piece.BRICK_WIDTH);
 		}
 		if (startPower == true) {
 			powerUp.draw(g, powerX, powerY);
-		} 
+		}
 		g.setColor(Color.BLUE);
-		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(), Paddle.PADDLE_HEIGHT);
+		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(),
+				Paddle.PADDLE_HEIGHT);
 	}
 
 	public void movePaddleLeft() {
@@ -85,8 +89,10 @@ public class Board extends JPanel {
 			// the ball died
 			// pause time thread.sleep not working
 			if (livesLeft == 0) {
-				int playAgain = JOptionPane.showConfirmDialog(null, "Game over! Would you like to play again?",
-						"Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+				int playAgain = JOptionPane.showConfirmDialog(null,
+						"Game over! Would you like to play again?",
+						"Game Over", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/gameOver.jpg")));
 				if (playAgain == 0) {
 					restart();
@@ -100,7 +106,8 @@ public class Board extends JPanel {
 				livesLeft--;
 				panel.setLivesText(livesLeft);
 				ball = new Ball(paddle);
-				}
+			}
+
 		} else {
 			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
 			if (hitBrick != null) {
@@ -124,14 +131,16 @@ public class Board extends JPanel {
 
 	public void checkWinner() {
 		if (bricks.size() == 0) {
-			if (level < 3) {
+			if (level <= 3) {
 				newBall = true;
 				setDefault();
 				nextLevel();
 				panel.setLevelText(level);
 			} else {
-				int playAgain = JOptionPane.showConfirmDialog(null, "You win! Would you like to play again?",
-						"Congratulations!!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+				int playAgain = JOptionPane.showConfirmDialog(null,
+						"You win! Would you like to play again?",
+						"Congratulations!!", JOptionPane.YES_NO_OPTION,
+						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/winner.jpg")));
 				if (playAgain == 0) {
 					restart();
@@ -226,6 +235,7 @@ public class Board extends JPanel {
 			x += 50;
 			y += 30;
 		}
+
 		repaint();
 	}
 
@@ -275,14 +285,14 @@ public class Board extends JPanel {
 		repaint();
 	}
 
-	public void setPaddleMini(){
+	public void setPaddleMini() {
 		paddle.setPaddleMini();
 	}
-	
-	public void setPaddleLong(){
+
+	public void setPaddleLong() {
 		paddle.setPaddleLong();
 	}
-	
+
 	public int getPowerX() {
 		return powerX;
 	}
@@ -346,7 +356,7 @@ public class Board extends JPanel {
 	public void setStartPower(boolean startPower) {
 		this.startPower = startPower;
 	}
-	
+
 	public boolean newBall() {
 		return newBall;
 	}
@@ -356,6 +366,8 @@ public class Board extends JPanel {
 	}
 
 	public void setDefault() {
+		setStartPower(false);
+		setPowerUp(null);
 		paddle.setDefault();
 		ball.setDefault();
 		repaint();
