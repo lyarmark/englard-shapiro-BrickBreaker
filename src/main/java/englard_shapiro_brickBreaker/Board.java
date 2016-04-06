@@ -160,14 +160,31 @@ public class Board extends JPanel {
 		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.RED));
 			x += 50;
-		}/*
-		 * x = 0; y += 30; for (int i = 0; i < 12; i++) { bricks.add(new
-		 * Piece(x, y, Color.ORANGE)); x += 50; } x = 0; y += 30; for (int i =
-		 * 0; i < 12; i++) { bricks.add(new Piece(x, y, Color.YELLOW)); x += 50;
-		 * } x = 0; y += 30; for (int i = 0; i < 12; i++) { bricks.add(new
-		 * Piece(x, y, Color.GREEN)); x += 50; } x = 0; y += 30; for (int i = 0;
-		 * i < 12; i++) { bricks.add(new Piece(x, y, Color.BLUE)); x += 50; }
-		 */
+		}
+		x = 0;
+		y += 30;
+		for (int i = 0; i < 12; i++) {
+			bricks.add(new Piece(x, y, Color.ORANGE));
+			x += 50;
+		}
+		x = 0;
+		y += 30;
+		for (int i = 0; i < 12; i++) {
+			bricks.add(new Piece(x, y, Color.YELLOW));
+			x += 50;
+		}
+		x = 0;
+		y += 30;
+		for (int i = 0; i < 12; i++) {
+			bricks.add(new Piece(x, y, Color.GREEN));
+			x += 50;
+		}
+		x = 0;
+		y += 30;
+		for (int i = 0; i < 12; i++) {
+			bricks.add(new Piece(x, y, Color.BLUE));
+			x += 50;
+		}
 		repaint();
 	}
 
@@ -180,19 +197,39 @@ public class Board extends JPanel {
 			x += 50;
 			y += 30;
 		}
-		/*
-		 * x = 50; y = 0; for (int i = 0; i < 11; i++) { bricks.add(new Piece(x,
-		 * y, Color.ORANGE)); x += 50; y += 30; }
-		 * 
-		 * x = 100; y = 0; for (int i = 0; i < 10; i++) { bricks.add(new
-		 * Piece(x, y, Color.YELLOW)); x += 50; y += 30; }
-		 * 
-		 * x = 150; y = 0; for (int i = 0; i < 9; i++) { bricks.add(new Piece(x,
-		 * y, Color.GREEN)); x += 50; y += 30; }
-		 * 
-		 * x = 200; y = 0; for (int i = 0; i < 8; i++) { bricks.add(new Piece(x,
-		 * y, Color.BLUE)); x += 50; y += 30; }
-		 */
+
+		x = 50;
+		y = 0;
+		for (int i = 0; i < 11; i++) {
+			bricks.add(new Piece(x, y, Color.ORANGE));
+			x += 50;
+			y += 30;
+		}
+
+		x = 100;
+		y = 0;
+		for (int i = 0; i < 10; i++) {
+			bricks.add(new Piece(x, y, Color.YELLOW));
+			x += 50;
+			y += 30;
+		}
+
+		x = 150;
+		y = 0;
+		for (int i = 0; i < 9; i++) {
+			bricks.add(new Piece(x, y, Color.GREEN));
+			x += 50;
+			y += 30;
+		}
+
+		x = 200;
+		y = 0;
+		for (int i = 0; i < 8; i++) {
+			bricks.add(new Piece(x, y, Color.BLUE));
+			x += 50;
+			y += 30;
+		}
+
 		repaint();
 	}
 
