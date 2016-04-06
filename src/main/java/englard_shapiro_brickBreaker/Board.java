@@ -97,12 +97,10 @@ public class Board extends JPanel {
 				// send in new ball , remove this ball
 				newBall = true;
 				paddle.setDefault();
-				//ball.setDefault();
 				livesLeft--;
 				panel.setLivesText(livesLeft);
 				ball = new Ball(paddle);
-				//ball = new Ball(paddle.getX(), (paddle.getY() - Paddle.PADDLE_HEIGHT) - 10, paddle);
-			}
+				}
 		} else {
 			Piece hitBrick = ball.move(paddle.getX(), paddle.getY(), bricks);
 			if (hitBrick != null) {
@@ -190,7 +188,7 @@ public class Board extends JPanel {
 	private void setLevelTwo() {
 		level = 2;
 		int x = 0;
-		int y = 0;
+		int y = 30;
 		for (int i = 0; i < 12; i++) {
 			bricks.add(new Piece(x, y, Color.RED));
 			x += 50;
@@ -198,7 +196,7 @@ public class Board extends JPanel {
 		}
 
 		x = 50;
-		y = 0;
+		y = 30;
 		for (int i = 0; i < 11; i++) {
 			bricks.add(new Piece(x, y, Color.ORANGE));
 			x += 50;
@@ -206,7 +204,7 @@ public class Board extends JPanel {
 		}
 
 		x = 100;
-		y = 0;
+		y = 30;
 		for (int i = 0; i < 10; i++) {
 			bricks.add(new Piece(x, y, Color.YELLOW));
 			x += 50;
@@ -214,7 +212,7 @@ public class Board extends JPanel {
 		}
 
 		x = 150;
-		y = 0;
+		y = 30;
 		for (int i = 0; i < 9; i++) {
 			bricks.add(new Piece(x, y, Color.GREEN));
 			x += 50;
@@ -222,7 +220,7 @@ public class Board extends JPanel {
 		}
 
 		x = 200;
-		y = 0;
+		y = 30;
 		for (int i = 0; i < 8; i++) {
 			bricks.add(new Piece(x, y, Color.BLUE));
 			x += 50;
@@ -233,9 +231,9 @@ public class Board extends JPanel {
 
 	private void setLevelThree() {
 		level = 3;
-		bricks.add(new Piece(275, 0, Color.BLUE));
+		bricks.add(new Piece(275, 30, Color.BLUE));
 		int x = 150;
-		int y = 30;
+		int y = 60;
 		for (int i = 0; i <= 5; i++) {
 			bricks.add(new Piece(x, y, Color.RED));
 			x += 50;
@@ -348,7 +346,6 @@ public class Board extends JPanel {
 	public void setStartPower(boolean startPower) {
 		this.startPower = startPower;
 	}
-
 	
 	public boolean newBall() {
 		return newBall;
@@ -363,5 +360,4 @@ public class Board extends JPanel {
 		ball.setDefault();
 		repaint();
 	}
-
 }
