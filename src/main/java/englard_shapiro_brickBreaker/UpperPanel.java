@@ -8,22 +8,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.google.inject.Singleton;
+
 @Singleton
-public class UpperPanel extends JPanel{
+public class UpperPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel lives;
-	private JLabel score;	
+	private JLabel score;
 	private JLabel levels;
-	
-	public UpperPanel(){
+
+	public UpperPanel() {
 		setBackground(Color.BLACK);
 		setLayout(new GridLayout(0, 3));
-		
+
 		score = new JLabel();
 		lives = new JLabel();
 		levels = new JLabel();
-		
+
 		lives.setForeground(Color.WHITE);
 		lives.setFont(new Font(lives.getFont().getName(), Font.PLAIN, 24));
 		setLivesText(3);
@@ -33,16 +34,15 @@ public class UpperPanel extends JPanel{
 		levels.setForeground(Color.WHITE);
 		levels.setFont(new Font(levels.getFont().getName(), Font.PLAIN, 24));
 		setLevelText(1);
-		
+
 		add(lives);
 		add(score);
 		add(levels);
 	}
-	
+
 	public void setLivesText(int numLives) {
 		StringBuilder builder = new StringBuilder();
 		builder.append(" Lives: ");
-		//builder.append(numLives + " ");
 		for (int i = 0; i < numLives; i++) {
 			builder.append("\u25CF ");
 		}
@@ -53,7 +53,7 @@ public class UpperPanel extends JPanel{
 		score.setText("      Score: " + scoreNum + " ");
 	}
 
-	public void setLevelText(int level){
+	public void setLevelText(int level) {
 		levels.setText("               Level: " + level);
 	}
 }

@@ -13,6 +13,6 @@ public class PowerUpMini extends PowerUp {
 	@Override
 	public void draw(Graphics g, int powerX, int powerY) {
 		g.setColor(Color.PINK);
-		g.fillRect(powerX, powerY, super.DIAMETER, super.DIAMETER);
+		g.fillRect(powerX, powerY, PowerUp.DIAMETER, PowerUp.DIAMETER);
 	}
 }

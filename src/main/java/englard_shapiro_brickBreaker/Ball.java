@@ -31,7 +31,7 @@ public class Ball {
 		xPos = Board.BOARD_WIDTH / 2 - 3;
 		yPos = paddle.getY() - Paddle.PADDLE_HEIGHT + 3;
 	}
-	
+
 	// returns brick that was hit or null if no brick hit
 	public Piece move(int paddleX, int paddleY, ArrayList<Piece> bricks) {
 		brickHit = false;
@@ -110,7 +110,8 @@ public class Ball {
 
 	private void checkSidePaddle(int x, int y) {
 
-		if (((leftSide(x) || rightSide(x)) && yPos + BALL_DIAMETER >= y && yPos + BALL_DIAMETER <= (y + Paddle.PADDLE_HEIGHT))) {
+		if (((leftSide(x) || rightSide(x)) && yPos + BALL_DIAMETER >= y && yPos
+				+ BALL_DIAMETER <= (y + Paddle.PADDLE_HEIGHT))) {
 			switchUpandDown();
 			switchRightandLeft();
 		}
@@ -133,7 +134,8 @@ public class Ball {
 
 	private void checkBrickRight(Piece brick) {
 		int brickY = brick.getY();
-		if ((xPos == (brick.getX() + Piece.BRICK_LENGTH)) && (yPos <= (brickY + Piece.BRICK_WIDTH)) && (yPos >= brickY)) {
+		if ((xPos == (brick.getX() + Piece.BRICK_LENGTH))
+				&& (yPos <= (brickY + Piece.BRICK_WIDTH)) && (yPos >= brickY)) {
 			switchRightandLeft();
 			brickHit = true;
 		}
@@ -142,7 +144,8 @@ public class Ball {
 	private void checkBrickLeft(Piece brick) {
 		int brickY = brick.getY();
 		if ((xPos + BALL_DIAMETER >= brick.getX()) && xPos < brick.getX()
-				&& (yPos + BALL_DIAMETER <= (brickY + Piece.BRICK_WIDTH)) && (yPos + BALL_DIAMETER >= brickY)) {
+				&& (yPos + BALL_DIAMETER <= (brickY + Piece.BRICK_WIDTH))
+				&& (yPos + BALL_DIAMETER >= brickY)) {
 			switchRightandLeft();
 			brickHit = true;
 		}
@@ -150,7 +153,8 @@ public class Ball {
 
 	private void checkBrickTopBottom(Piece brick) {
 		int brickX = brick.getX();
-		if ((brickTop(brick) || brickBottom(brick)) && (xPos <= brickX + Piece.BRICK_LENGTH)) {
+		if ((brickTop(brick) || brickBottom(brick))
+				&& (xPos <= brickX + Piece.BRICK_LENGTH)) {
 			if (moveLeft) {
 				if (xPos + BALL_DIAMETER >= brickX) {
 					switchUpandDown();
@@ -205,5 +209,5 @@ public class Ball {
 
 	public int getY() {
 		return yPos;
-	}	
+	}
 }

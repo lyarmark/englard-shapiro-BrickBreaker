@@ -51,7 +51,20 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		isPaused = false;
 		RunGame();
 		setVisible(true);
-		JOptionPane.showMessageDialog(null, "test");
+		JOptionPane
+				.showMessageDialog(
+						null,
+						"Clear the board by hitting the ball against the bricks."
+								+ "\nMove the paddle using the arrow keys, but don't let the ball fall."
+								+ "\nUse the space bar to release the ball,"
+								+ "\nThe P key pauses and resumes the game."
+								+ "\n\nCATCH THE POWERUPS TO..."
+								+ "\nPink square - shrink paddle"
+								+ "\nGrey square - elongate the paddle"
+								+ "\nMagenta circle - increase speed (SURPRISE)"
+								+ "\nBlue circle - decrease speed (DO NOT CATCH)"
+								+ "\n\nFinish all three levels to win the game!"
+								+ "\nHAVE FUN!!");
 	}
 
 	private void RunGame() {
@@ -62,7 +75,8 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 				music.start();
 			}
 		};
-		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22, TimeUnit.SECONDS);
+		this.musicExecutor.scheduleAtFixedRate(playSound, 0, 22,
+				TimeUnit.SECONDS);
 
 		play = new Runnable() {
 
@@ -176,7 +190,8 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 	}
 
 	public void addPowerUps() {
-		powers = new PowerUp[] { new PowerUpFast(), new PowerUpSlow(), new PowerUpMini(), new PowerUpLong() };
+		powers = new PowerUp[] { new PowerUpFast(), new PowerUpSlow(),
+				new PowerUpMini(), new PowerUpLong() };
 	}
 
 	public void setPower() {
@@ -194,8 +209,9 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 		if (board.isStartPower()) {
 			if (board.newBall()) {
 				board.setStartPower(false);
-			} else if (power.checkHitPaddle(board.getPowerX(), board.getPowerY(), paddle.getPaddleLength(),
-					paddle.getY(), paddle.getX())) {
+			} else if (power.checkHitPaddle(board.getPowerX(),
+					board.getPowerY(), paddle.getPaddleLength(), paddle.getY(),
+					paddle.getX())) {
 				power.powerUp(this);
 				power = null;
 				board.setStartPower(false);

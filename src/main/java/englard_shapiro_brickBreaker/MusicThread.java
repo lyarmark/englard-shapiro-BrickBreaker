@@ -8,7 +8,6 @@ public class MusicThread extends Thread {
 	private AudioClip clip;
 
 	public MusicThread() {
-
 	}
 
 	public void run() {
