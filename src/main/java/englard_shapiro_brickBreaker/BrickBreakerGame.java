@@ -56,13 +56,13 @@ public class BrickBreakerGame extends JFrame implements KeyListener {
 						null,
 						"Clear the board by hitting the ball against the bricks."
 								+ "\nMove the paddle using the arrow keys, but don't let the ball fall."
-								+ "\nUse the space bar to release the ball,"
+								+ "\nUse the space bar to release the ball."
 								+ "\nThe P key pauses and resumes the game."
 								+ "\n\nCATCH THE POWERUPS TO..."
 								+ "\nPink square - shrink paddle"
 								+ "\nGrey square - elongate the paddle"
-								+ "\nMagenta circle - increase speed (SURPRISE)"
-								+ "\nBlue circle - decrease speed (DO NOT CATCH)"
+								+ "\nMagenta circle - increase speed"
+								+ "\nBlue circle - decrease speed"
 								+ "\n\nFinish all three levels to win the game!"
 								+ "\nHAVE FUN!!");
 	}
