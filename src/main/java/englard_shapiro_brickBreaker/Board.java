@@ -53,24 +53,20 @@ public class Board extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.white);
-		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER,
-				Ball.BALL_DIAMETER);
+		g.fillOval(ball.getX(), ball.getY(), Ball.BALL_DIAMETER, Ball.BALL_DIAMETER);
 		// create loop to set up all pieces - make array of pieces
 		for (int i = 0; i < bricks.size(); i++) {
 			Piece brick = bricks.get(i);
 			g.setColor(brick.getColor());
-			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
-					Piece.BRICK_WIDTH);
+			g.fillRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
 			g.setColor(Color.BLACK);
-			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH,
-					Piece.BRICK_WIDTH);
+			g.drawRect(brick.getX(), brick.getY(), Piece.BRICK_LENGTH, Piece.BRICK_WIDTH);
 		}
 		if (startPower == true) {
 			powerUp.draw(g, powerX, powerY);
 		}
 		g.setColor(Color.BLUE);
-		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(),
-				Paddle.PADDLE_HEIGHT);
+		g.fillRect(paddle.getX(), paddle.getY(), paddle.getPaddleLength(), Paddle.PADDLE_HEIGHT);
 	}
 
 	public void movePaddleLeft() {
@@ -88,10 +84,8 @@ public class Board extends JPanel {
 		if (ball.getY() > BOARD_HEIGHT) {
 			// the ball died
 			if (livesLeft == 0) {
-				int playAgain = JOptionPane.showConfirmDialog(null,
-						"Game over! Would you like to play again?",
-						"Game Over", JOptionPane.YES_NO_OPTION,
-						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+				int playAgain = JOptionPane.showConfirmDialog(null, "Game over! Would you like to play again?",
+						"Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/gameOver.jpg")));
 				if (playAgain == 0) {
 					restart();
@@ -136,10 +130,8 @@ public class Board extends JPanel {
 				nextLevel();
 				panel.setLevelText(level);
 			} else {
-				int playAgain = JOptionPane.showConfirmDialog(null,
-						"You win! Would you like to play again?",
-						"Congratulations!!", JOptionPane.YES_NO_OPTION,
-						JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
+				int playAgain = JOptionPane.showConfirmDialog(null, "You win! Would you like to play again?",
+						"Congratulations!!", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(
 								getClass().getResource("/winner.jpg")));
 				if (playAgain == 0) {
 					restart();
